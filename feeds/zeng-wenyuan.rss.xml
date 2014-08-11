@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>观测站</title><link>/</link><description></description><atom:link href="/feeds%5Czeng-wenyuan.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 11 Aug 2014 00:00:00 +0800</lastBuildDate><item><title>Hello World！</title><link>/hello-world.html</link><description>&lt;p&gt;断断续续折腾了好几天，终于是吧这个博客弄起来了。&lt;/p&gt;
+&lt;p&gt;用pelican配的github pages，不得不说python2在windows下的编码问题真是令人蛋碎啊。从安装开始就不停的报unicodedecodeError。差点把我搞疯了。这是逼我转投python3的节奏么。&lt;/p&gt;
+&lt;p&gt;不管怎样，问题终究是解决了。解法是在每一个报错的文件里加上&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+&lt;span class="nb"&gt;reload&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setdefaultencoding&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getfilesystemencoding&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;不小心误入这里的朋友也许可以用上。&lt;/p&gt;
+&lt;p&gt;最后感谢一下frantic1048提供的pelican使用&lt;a href="http://frantic1048.com/bo-ke-dan-sheng-ji-ji-yu-githubpelicanchuang-jian-bo-ke-de-zheng-ge-guo-cheng.html"&gt;教程&lt;/a&gt;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Mon, 11 Aug 2014 00:00:00 +0800</pubDate><guid>tag:,2014-08-11:hello-world.html</guid><category>杂物</category><category>随笔</category><category>python</category></item></channel></rss>

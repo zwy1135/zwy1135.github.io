@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>观测站</title>
+    <title>Tags - 观测站</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -57,27 +57,47 @@
     <div class="row">
         <div class="col-sm-9">
 
-            <article>
-                <h2><a href="/hello-world.html">Hello World！</a></h2>
-                <div class="summary"><p>断断续续折腾了好几天，终于是吧这个博客弄起来了。</p>
-<p>用pelican配的github pages，不得不说python2在windows下的编码问题真是令人蛋碎啊。从安装开始就不停的报unicodedecodeError。差点把我搞疯了。这是逼我转投python3的节奏么。</p>
-<p>不管怎样，问题终究是解决了。解法是在每一个报错的文件里加上</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
-<span class="nb">reload</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">setdefaultencoding</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">getfilesystemencoding</span><span class="p">())</span>
-</pre></div>
-
-
-<p>不小心误入这里的朋友也许可以用上。</p>
-<p>最后感谢一下frantic1048提供的pelican使用<a href="http://frantic1048.com/bo-ke-dan-sheng-ji-ji-yu-githubpelicanchuang-jian-bo-ke-de-zheng-ge-guo-cheng.html">教程</a>。</p>
-<blockquote>
-<p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
-</blockquote>
-                    <a class="btn btn-default btn-xs" href="/hello-world.html">more ...</a>
+    <section id="tags">
+        <h1>Tags for 观测站</h1>
+        <div class="panel-group" id="accordion">            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-python">python <span class="badge pull-right">1</span></a>
+                    </h4>
                 </div>
-            </article>
-            <hr/>
+                <div id="collapse-python" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p><span class="categories-timestamp"><time datetime="2014-08-11T00:00:00">周一 11 八月 2014</time></span> <a href="/hello-world.html">Hello World！</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-sui-bi">随笔 <span class="badge pull-right">1</span></a>
+                    </h4>
+                </div>
+                <div id="collapse-sui-bi" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p><span class="categories-timestamp"><time datetime="2014-08-11T00:00:00">周一 11 八月 2014</time></span> <a href="/hello-world.html">Hello World！</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-za-wu">杂物 <span class="badge pull-right">1</span></a>
+                    </h4>
+                </div>
+                <div id="collapse-za-wu" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p><span class="categories-timestamp"><time datetime="2014-08-11T00:00:00">周一 11 八月 2014</time></span> <a href="/hello-world.html">Hello World！</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+    </section>
         </div>
         <div class="col-sm-3 well well-sm" id="sidebar">
 
