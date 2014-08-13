@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>观测站</title><link>http://zwy1135.github.io/</link><description></description><atom:link href="http://zwy1135.github.io/feeds%5Czeng-wenyuan.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 12 Aug 2014 00:00:00 +0800</lastBuildDate><item><title>玩转Kaggle之Titanic(0):开坑宣言</title><link>http://zwy1135.github.io/wan-zhuan-kagglezhi-titanic0kai-keng-xuan-yan.html</link><description>&lt;p&gt;观众朋友们，欢迎收看最新一期的Kaggle挑战赛娱乐实况解说。由于博主也是现学现卖，在本系列内容中，你们将不可避免的看到：博主犯二，代码错漏，方法行不通，前面全部推到重来等内容。遇到这种情况，其立即保护好自己的双眼并果断右上方点×。不过，如果有真的猛士能忍下这些糟糕的内容指点我一下的话，请在下方留言，谢谢。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>观测站</title><link>http://zwy1135.github.io/</link><description></description><atom:link href="http://zwy1135.github.io/feeds%5Czeng-wenyuan.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 13 Aug 2014 00:00:00 +0800</lastBuildDate><item><title>玩转Kaggle之Titanic(1):这货到底在问什么？</title><link>http://zwy1135.github.io/wan-zhuan-kagglezhi-titanic1zhe-huo-dao-di-zai-wen-shi-yao.html</link><description>&lt;p&gt;接上回。&lt;/p&gt;
+&lt;p&gt;我们在上回扯了一大堆淡，终于把要做的题目定下来了，从这一篇开始就要上干货了，可喜可贺，喜大普奔。。。。。那么，我们究竟要做点什么呢？&lt;/p&gt;
+&lt;p&gt;多家游戏界的大佬们啊用自己的一款款大作告诉我们，关卡开始前一掉要先来一段任务简报舒缓下心情。我们来看看这里面有什么内容。&lt;/p&gt;
+&lt;p&gt;在一望无际的大海上，马上就要沉掉的不沉之舟泰坦尼克载着杰克和罗丝飘荡着缓缓地向着目的地驶去，突然，航路上一座冰山狠狠地撞了过来。。。。。。&lt;/p&gt;
+&lt;p&gt;喂喂，快醒醒，我们不是在拍电影啊，看重点。&lt;/p&gt;
+&lt;p&gt;在那次事故中，2224人里面有1502人当场就被GM封号，永远的离开了地球Online。去的人自然是去了，活下来的人更要想尽办法继续活下去。那么，问题出现了，&lt;strong&gt;问&lt;/strong&gt;：在沉船事故发生这种&lt;strong&gt;状况&lt;/strong&gt;下(是沉船状况下，不是空难状况下。此点的重要性会在下一篇讲到)，某个人是不是可能&lt;strong&gt;活下来&lt;/strong&gt;？&lt;/p&gt;
+&lt;p&gt;Bingo！ 各位看官，看到这里要打起精神来了，我们被问的是这个人&lt;strong&gt;&lt;em&gt;*是否&lt;/em&gt;&lt;/strong&gt;*能活下来而不是这个人能活&lt;strong&gt;&lt;em&gt;多长&lt;/em&gt;&lt;/strong&gt;，也不是这个人对自己活下来这件事的满意&lt;strong&gt;&lt;em&gt;程度&lt;/em&gt;&lt;/strong&gt;是多少。重点出来了：我们要求得的结果是&lt;strong&gt;&lt;em&gt;是&lt;/em&gt;&lt;/strong&gt;或者&lt;strong&gt;&lt;em&gt;否&lt;/em&gt;&lt;/strong&gt;，换句话说，我们要求得的&lt;strong&gt;&lt;em&gt;结果是&lt;/em&gt;&lt;/strong&gt;一个&lt;strong&gt;&lt;em&gt;离散的&lt;/em&gt;&lt;/strong&gt; &lt;strong&gt;&lt;em&gt;类别(Categories)&lt;/em&gt;&lt;/strong&gt;，这就表明了我们现在要做的要么是聚类，要么就是分类了。&lt;/p&gt;
+&lt;p&gt;再看看我们现在有什么。我们现在有一个登记表，上面记录着乘客票价，仓位等信息以及他们是否幸存。也就是说，我们&lt;strong&gt;&lt;em&gt;现有&lt;/em&gt;&lt;/strong&gt;一份&lt;strong&gt;&lt;em&gt;标记好&lt;/em&gt;&lt;/strong&gt;乘客是否生存的数据。&lt;/p&gt;
+&lt;p&gt;现有有标记数据，求离散类别的结果，这就是一个妥妥的分类问题没跑了。&lt;/p&gt;
+&lt;p&gt;谨记这一点，我们进入&lt;strong&gt;数据准备&lt;/strong&gt;阶段。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;我是愉快的分割线&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;上面闲扯了那么多有的没的东西，现在我来告诉大家一个简单的判断问题的方法：&lt;/p&gt;
+&lt;p&gt;根据现有数据和所求的结果来判断：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;现有有标记数据，求离散的类别(Categories)结果   -&amp;gt; 分类(Classification)问题
+现有有标记数据，求连续的数值(Numerical)结果    -&amp;gt; 回归(Regression)问题
+现有无标记数据，求离散的类别结果               -&amp;gt; 聚类(Clustering)问题
+现有无标记数据，求连续的数值结果               -&amp;gt; 我也不知道什么问题&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;此外还有根据现象发生的时间求现象间的因果关系之类的问题等等其他问题，因为博主现在也不太熟悉。这里也不作细说。&lt;/p&gt;
+&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Wed, 13 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-13:wan-zhuan-kagglezhi-titanic1zhe-huo-dao-di-zai-wen-shi-yao.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category></item><item><title>玩转Kaggle之Titanic(0):开坑宣言</title><link>http://zwy1135.github.io/wan-zhuan-kagglezhi-titanic0kai-keng-xuan-yan.html</link><description>&lt;p&gt;观众朋友们，欢迎收看最新一期的Kaggle挑战赛娱乐实况解说。由于博主也是现学现卖，在本系列内容中，你们将不可避免的看到：博主犯二，代码错漏，方法行不通，前面全部推到重来等内容。遇到这种情况，其立即保护好自己的双眼并果断右上方点×。不过，如果有真的猛士能忍下这些糟糕的内容指点我一下的话，请在下方留言，谢谢。&lt;/p&gt;
 &lt;p&gt;废话不多说，我们开始吧。&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;先进一段背景。&lt;/p&gt;
