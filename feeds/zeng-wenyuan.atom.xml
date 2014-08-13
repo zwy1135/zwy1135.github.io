@@ -15,10 +15,10 @@
 &lt;p&gt;上面闲扯了那么多有的没的东西，现在我来告诉大家一个简单的判断问题的方法：&lt;/p&gt;
 &lt;p&gt;根据现有数据和所求的结果来判断：&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;现有有标记数据，求离散的类别(Categories)结果   -&amp;gt; 分类(Classification)问题
-现有有标记数据，求连续的数值(Numerical)结果    -&amp;gt; 回归(Regression)问题
-现有无标记数据，求离散的类别结果               -&amp;gt; 聚类(Clustering)问题
-现有无标记数据，求连续的数值结果               -&amp;gt; 我也不知道什么问题&lt;/p&gt;
+&lt;p&gt;现有有标记数据，求离散的类别(Categories)结果   -&amp;gt; 分类(Classification)问题&lt;/p&gt;
+&lt;p&gt;现有有标记数据，求连续的数值(Numerical)结果    -&amp;gt; 回归(Regression)问题&lt;/p&gt;
+&lt;p&gt;现有无标记数据，求离散的类别结果               -&amp;gt; 聚类(Clustering)问题&lt;/p&gt;
+&lt;p&gt;现有无标记数据，求连续的数值结果               -&amp;gt; 我也不知道什么问题&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;此外还有根据现象发生的时间求现象间的因果关系之类的问题等等其他问题，因为博主现在也不太熟悉。这里也不作细说。&lt;/p&gt;
 &lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</summary><category term="Machine Learning"></category><category term="Scikit-Learn"></category><category term="python"></category></entry><entry><title>玩转Kaggle之Titanic(0):开坑宣言</title><link href="http://zwy1135.github.io/wan-zhuan-kagglezhi-titanic0kai-keng-xuan-yan.html" rel="alternate"></link><updated>2014-08-12T00:00:00+08:00</updated><author><name>Zeng Wenyuan</name></author><id>tag:zwy1135.github.io,2014-08-12:wan-zhuan-kagglezhi-titanic0kai-keng-xuan-yan.html</id><summary type="html">&lt;p&gt;观众朋友们，欢迎收看最新一期的Kaggle挑战赛娱乐实况解说。由于博主也是现学现卖，在本系列内容中，你们将不可避免的看到：博主犯二，代码错漏，方法行不通，前面全部推到重来等内容。遇到这种情况，其立即保护好自己的双眼并果断右上方点×。不过，如果有真的猛士能忍下这些糟糕的内容指点我一下的话，请在下方留言，谢谢。&lt;/p&gt;
