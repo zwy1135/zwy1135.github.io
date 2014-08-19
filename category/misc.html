@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>python - 观测站</title>
+    <title>misc - 观测站</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -44,6 +44,9 @@
                         <li >
                             <a href="../category/machine-learning.html">Machine learning</a>
                         </li>
+                        <li class="active">
+                            <a href="../category/misc.html">Misc</a>
+                        </li>
                         <li >
                             <a href="../category/sui-bi.html">随笔</a>
                         </li>
@@ -66,76 +69,6 @@
 <p>另外这几天发现了一个叫 conda 的 python 包管理器，甚是好用啊。最主要的是它用二进制安装包的形式来管理各种 python 包，而不是像 pip 一样管理源码包。这对于像我这种主要使用 windows 的家伙简直是天大的福音啊。从此更新 numpy 和 scipy 再也不用自己去下安装包了。再也不用折腾 lapack 和 blas 这种蛋疼得问题库了。</p>
 <p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
                     <a class="btn btn-default btn-xs" href="../zhuan-tou-python3liao.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="../wan-zhuan-kagglezhi-titanic2hao-da-yi-tuo-shu-ju-a.html">玩转Kaggle之Titanic(2):好大一坨数据啊</a></h2>
-                <div class="summary"><p>接上回。</p>
-<p>上回我们界定了我们要处理的问题，接下来就应该准备数据了。</p>
-<h3>什么数据才好？</h3>
-<p>准备数据的第一个问题，我们的数据从那来？有朋友一定要说了：这不明摆着的嘛，既然是kaggle上的问题，直接在kaggle上载下来不就完了嘛。对，这实在Kaggle上，但在实际应用中呢？实际应用中的数据可都是要自己去准备的。这是就要思考一个重要的事情，什么样的数据才是有用的呢？</p>
-<p>举个栗子，某天你的老板拎着一个U盘走过来对你说：“XX啊，我这有一份全市每天每一个菜市场里猪肉的价格表，你帮我看看明天哪支股票会涨。”这时你不禁脱口而出：“你TM在逗我？”然后你就被踢出去了，公司里再没人见过你。</p>
-<p>相信明眼人一定看出我想说什么了。对，跟<strong><em>问题有关</em></strong>的数据才是好数据，其他的一点价值都没有。</p>
-<p>在当前的问题下，我们要预测某人在沉船事故中能否幸存，我们就应该使用沉船事故中统计出来的数据。如果有人给你一份空难数据，你就可以直接糊他一脸了。好在Kaggle给我们准备好了数据，我们直接用就好。</p>
-<h3>第一件事</h3>
-<p>现在我们拿到数据了，让我们先看看里面有什么内容，万一能够看出点什么规律，我们就不用辛苦的做机器学习系统了。</p>
-<p><strong>错！！！</strong></p>
-<p>我们要坚信一条：数据和计算结果要比人用直觉去看出来的规律可靠得多的多的多！</p>
-<p>在这个认识下，我们的数据终究会进入机器进行分析的。而机器主要要做两件事情：1 ...</p>
-                    <a class="btn btn-default btn-xs" href="../wan-zhuan-kagglezhi-titanic2hao-da-yi-tuo-shu-ju-a.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="../wan-zhuan-kagglezhi-titanic1zhe-huo-dao-di-zai-wen-shi-yao.html">玩转Kaggle之Titanic(1):这货到底在问什么？</a></h2>
-                <div class="summary"><p>接上回。</p>
-<p>我们在上回扯了一大堆淡，终于把要做的题目定下来了，从这一篇开始就要上干货了，可喜可贺，喜大普奔。。。。。那么，我们究竟要做点什么呢？</p>
-<p>多家游戏界的大佬们啊用自己的一款款大作告诉我们，关卡开始前一掉要先来一段任务简报舒缓下心情。我们来看看这里面有什么内容。</p>
-<p>在一望无际的大海上，马上就要沉掉的不沉之舟泰坦尼克载着杰克和罗丝飘荡着缓缓地向着目的地驶去，突然，航路上一座冰山狠狠地撞了过来。。。。。。</p>
-<p>喂喂，快醒醒，我们不是在拍电影啊，看重点。</p>
-<p>在那次事故中，2224人里面有1502人当场就被GM封号，永远的离开了地球Online。去的人自然是去了，活下来的人更要想尽办法继续活下去。那么，问题出现了，<strong>问</strong>：在沉船事故发生这种<strong>状况</strong>下(是沉船状况下，不是空难状况下。此点的重要性会在下一篇讲到)，某个人是不是可能<strong>活下来</strong>？</p>
-<p>Bingo！ 各位看官，看到这里要打起精神来了，我们被问的是这个人<strong><em>*是否</em></strong>*能活下来而不是这个人能活<strong><em>多长</em></strong>，也不是这个人对自己活下来这件事的满意<strong><em>程度</em></strong>是多少。重点出来了：我们要求得的结果是<strong><em>是</em></strong>或者<strong><em>否 ...</em></strong></p>
-                    <a class="btn btn-default btn-xs" href="../wan-zhuan-kagglezhi-titanic1zhe-huo-dao-di-zai-wen-shi-yao.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="../wan-zhuan-kagglezhi-titanic0kai-keng-xuan-yan.html">玩转Kaggle之Titanic(0):开坑宣言</a></h2>
-                <div class="summary"><p>观众朋友们，欢迎收看最新一期的Kaggle挑战赛娱乐实况解说。由于博主也是现学现卖，在本系列内容中，你们将不可避免的看到：博主犯二，代码错漏，方法行不通，前面全部推到重来等内容。遇到这种情况，其立即保护好自己的双眼并果断右上方点×。不过，如果有真的猛士能忍下这些糟糕的内容指点我一下的话，请在下方留言，谢谢。</p>
-<p>废话不多说，我们开始吧。</p>
-<hr />
-<p>先进一段背景。</p>
-<h3>什么是Kaggle？</h3>
-<p>Kaggle是由Predictive modelling公司于2010年四月推出的众包数据分析与竞赛平台。企业可以在上面以竞赛的形式发布自己数据分析的问题，寻求解决方法，而全世界任何人都可以注册，参与其中，提出自己的想法和解决方案，平台实时给予反馈结果，可以在排行榜中看到自己的位置。(引自<a href="http://blog.sina.com.cn/s/blog_648ca2350101ho9p.html">这里</a>)</p>
-<p>经过这么多年的发展，Kaggle在机器学习与数据分析领域中极具影响力，他的地位就像吉米多维奇习题集之于数学分析或者POJ之于ACM竞赛。</p>
-<p>总之对于对机器学习和数据科学感兴趣的同学，有事没事上去刷一刷题，勾搭一下各路大牛还是能起到活泼身心治疗失眠的作用的。</p>
-<h3>什么是Scikit-Learn？</h3>
-<p>Scikit-Learn是这一系列文章中主要用到的工具。它是Python下的一个重要的机器学习库，它实现了大部分经典的机器学习算法而且提供了方便使用又风格统一的接口。近年来使用人数不断上升，大有成为行业标准的趋势。更重要的是这是博主唯一会用的机器学习库，所以只能用它来卖弄一下了。</p>
-<hr />
-<p>了解完背景之后我们就可以进正题了。</p>
-<p>点开Kaggle的competitions页面，上面还是有很多正在进行的比赛的。不过，对于我们这种刚入门的新手肯定是不能上来就挑战那些难得吓人大神专用关卡。我们还是来看看101新手村里面有什么教学关卡好玩 ...</p>
-                    <a class="btn btn-default btn-xs" href="../wan-zhuan-kagglezhi-titanic0kai-keng-xuan-yan.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="../hello-world.html">Hello World！</a></h2>
-                <div class="summary"><p>断断续续折腾了好几天，终于是吧这个博客弄起来了。</p>
-<p>用pelican配的github pages，不得不说python2在windows下的编码问题真是令人蛋碎啊。从安装开始就不停的报unicodedecodeError。差点把我搞疯了。这是逼我转投python3的节奏么。</p>
-<p>不管怎样，问题终究是解决了。解法是在每一个报错的文件里加上</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
-<span class="nb">reload</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">setdefaultencoding</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">getfilesystemencoding</span><span class="p">())</span>
-</pre></div>
-
-
-<p>不小心误入这里的朋友也许可以用上。</p>
-<p>最后感谢一下frantic1048提供的pelican使用<a href="http://frantic1048.com/bo-ke-dan-sheng-ji-ji-yu-githubpelicanchuang-jian-bo-ke-de-zheng-ge-guo-cheng.html">教程</a>。</p>
-<blockquote>
-<p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
-</blockquote>
-                    <a class="btn btn-default btn-xs" href="../hello-world.html">more ...</a>
                 </div>
             </article>
             <hr/>
@@ -167,6 +100,12 @@
                         </li>
                     </ul>
                         <li class="list-group-item">
+                            <a href="../category/misc.html">
+                                <i class="fa fa-folder-open fa-lg"></i> misc
+                            </a>
+                        </li>
+                    </ul>
+                        <li class="list-group-item">
                             <a href="../category/sui-bi.html">
                                 <i class="fa fa-folder-open fa-lg"></i> 随笔
                             </a>
@@ -177,8 +116,8 @@
                 <li class="list-group-item"><a href="../"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group" id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="../tag/python.html">
-                                python
+                            <a href="../tag/scikit-learn.html">
+                                Scikit-Learn
                             </a>
                         </li>
                         <li class="list-group-item tag-1">
@@ -187,8 +126,8 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-1">
-                            <a href="../tag/scikit-learn.html">
-                                Scikit-Learn
+                            <a href="../tag/python.html">
+                                python
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -199,11 +138,6 @@
                         <li class="list-group-item tag-4">
                             <a href="../tag/za-wu.html">
                                 杂物
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="../tag/conda.html">
-                                conda
                             </a>
                         </li>
                     </ul>
