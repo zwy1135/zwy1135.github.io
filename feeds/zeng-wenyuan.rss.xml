@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>观测站</title><link>https://zwy1135.github.io/</link><description></description><atom:link href="https://zwy1135.github.io/feeds%5Czeng-wenyuan.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 19 Aug 2014 00:00:00 +0800</lastBuildDate><item><title>转投python3了</title><link>https://zwy1135.github.io/zhuan-tou-python3liao.html</link><description>&lt;p&gt;这几天关注了一下 python3 的兼容性情况，发现我平时常用的包都早就兼容 python3 了。又想起前段时间折腾的要死的 python2 编码问题，总觉的是时候拥抱新技术了。于是呢这一篇博客就成了我用 python3 版的 pelican 编译的第一篇博客了，可喜可贺，特此留念。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>观测站</title><link>https://zwy1135.github.io/</link><description></description><atom:link href="https://zwy1135.github.io/feeds%5Czeng-wenyuan.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 20 Aug 2014 00:00:00 +0800</lastBuildDate><item><title>玩转Kaggle之Titanic(3):该用哪个特征啊？</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic3gai-yong-na-ge-te-zheng-a.html</link><description>&lt;p&gt;接上回。&lt;/p&gt;
+&lt;p&gt;上回说到我们准备好了数据，可以进行特征提取了。&lt;/p&gt;
+&lt;p&gt;呃，其实这里是我用词不当，特征提取(Feature extraction)是从不规则数据中提取出特征，转化为我们的分类期可以用的形式。比如说将自然文本提取词频啦，词语的前后关系啦……做成类似我们使用的这种表格的形式。这也是可以再开一个系列讲的东西。这里也不赘述了。&lt;/p&gt;
+&lt;p&gt;这一篇我想讲的其实是特征选取(Feature selection)。换句话说就是计算那些东西该输进分类器里，哪些该扔掉。&lt;/p&gt;
+&lt;p&gt;为什么要选取特征？把所有的数据都输进分类器里让他自己训练不好么？&lt;/p&gt;
+&lt;p&gt;还真不好。&lt;/p&gt;
+&lt;p&gt;因为，数据维度加大也就是数据列越多会导致分类期的训练时间飞速上涨。&lt;/p&gt;
+&lt;p&gt;我们这回用的数据就那么几列，怎样都无所谓了。但是给你一段淘宝啊亚马逊啊的交易数据或者人类遗传编码数据呢，那可是轻轻松松破百万列的数据啊。要是都扔进分类器里应算，那你就做好准备算到天荒地老吧。(去超算中心一包就包年的土豪们，请自动无视这段话。)&lt;/p&gt;
+&lt;p&gt;另外，将多余数据加入到分类器也会增加过度拟合(over-fitting)的风险。&lt;/p&gt;
+&lt;p&gt;什么是过度拟合呢？简单来说就是分类器计算出来的规则太过于契合训练集导致它在训练集外的效果下降。再举个例子，假如现在有一个判断性别的任务，给的数据有Y染色体数目，发色，头发长度，肤色，指甲长度。正确情况下，分类器应该只根据Y染色体数目判断性别。但一旦分类器过拟合了，它就可能拟合出Y染色体数目不为零，头发长度小于10 CM，发色与肤色都不为白色者为男性这种规则出来。&lt;/p&gt;
+&lt;p&gt;说了这么多，到底我们应该怎么做特征提取啊？&lt;/p&gt;
+&lt;p&gt;两个思路(其实都差不多了):掐头，去尾。&lt;/p&gt;
+&lt;h4&gt;掐头&lt;/h4&gt;
+&lt;p&gt;所谓掐头就是说提取出重要程度最高的特征。&lt;/p&gt;
+&lt;p&gt;怎么确认特征的重要性呢，那就要看各位的统计功底了，你可以把各特征与标签分别作卡方检验、F检验、p值检验等。甚至是拿一部分训练数据直接丢进分类器里训练，然后检查分类器对各特征的重要性评估数据。&lt;/p&gt;
+&lt;p&gt;对于这种思路Scikit-learn 提供了&lt;a href="http://scikit-learn.org/stable/modules/feature_selection.html"&gt;好几种方法&lt;/a&gt;。比如说选取最好的k个特征&lt;a href="http://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html#sklearn.feature_selection.SelectKBest"&gt;SelectKBest&lt;/a&gt;，选取最好的百分之p的特征&lt;a href="http://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectPercentile.html#sklearn.feature_selection.SelectPercentile"&gt;SelectPercentile&lt;/a&gt;等等。&lt;/p&gt;
+&lt;h4&gt;去尾&lt;/h4&gt;
+&lt;p&gt;所谓去尾就是将不重要的特征砍掉。&lt;/p&gt;
+&lt;p&gt;什么是不重要的特征呢？还拿上面判断性别的任务来说，假如现在你的数据里有一列是眼睛的数量。这个量在每一条数据里都为2，你认为这个量重不重要呢？换句话说，变化率在某一个值以下的特征是不重要的。(这个判断隐含了一个前提条件，即训练集中每一个分类的数量都是足量的，如果每一类都足量的前提下一个变量的变化率还是很低，那么它就应该和每一个类都没关系)&lt;/p&gt;
+&lt;p&gt;在scikit-learn里面这个思路是由 VarianceThreshold 实现的。(居然这个函数不在API文档里的-_-!,大家到源码里面去看吧)&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;在这里，我们用的数据也就那么几列，掐完头就没什么数据了，所以我就只做了去尾的工作来排除无效数据。代码如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.feature_selection&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;VarianceThreshold&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;selection&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;selector&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;VarianceThreshold&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;threshold&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.9&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;0.9&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;selector&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit_transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;test&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;selector&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;test&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr /&gt;
+&lt;p&gt;另外呢，从广义上来说，特征选取也是一个数据降维的过程。所以也可以用PCA这类的方法来做。有兴趣的同学可以看一看这个&lt;a href="scikit-learn.org/stable/modules/decomposition.html"&gt;链接&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Wed, 20 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-20:wan-zhuan-kagglezhi-titanic3gai-yong-na-ge-te-zheng-a.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category></item><item><title>转投python3了</title><link>https://zwy1135.github.io/zhuan-tou-python3liao.html</link><description>&lt;p&gt;这几天关注了一下 python3 的兼容性情况，发现我平时常用的包都早就兼容 python3 了。又想起前段时间折腾的要死的 python2 编码问题，总觉的是时候拥抱新技术了。于是呢这一篇博客就成了我用 python3 版的 pelican 编译的第一篇博客了，可喜可贺，特此留念。&lt;/p&gt;
 &lt;p&gt;另外这几天发现了一个叫 conda 的 python 包管理器，甚是好用啊。最主要的是它用二进制安装包的形式来管理各种 python 包，而不是像 pip 一样管理源码包。这对于像我这种主要使用 windows 的家伙简直是天大的福音啊。从此更新 numpy 和 scipy 再也不用自己去下安装包了。再也不用折腾 lapack 和 blas 这种蛋疼得问题库了。&lt;/p&gt;
 &lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Tue, 19 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-19:zhuan-tou-python3liao.html</guid><category>python</category><category>conda</category></item><item><title>玩转Kaggle之Titanic(2):好大一坨数据啊</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic2hao-da-yi-tuo-shu-ju-a.html</link><description>&lt;p&gt;接上回。&lt;/p&gt;
 &lt;p&gt;上回我们界定了我们要处理的问题，接下来就应该准备数据了。&lt;/p&gt;

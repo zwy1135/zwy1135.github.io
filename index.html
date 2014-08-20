@@ -61,6 +61,22 @@
         <div class="col-sm-9">
 
             <article>
+                <h2><a href="https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic3gai-yong-na-ge-te-zheng-a.html">玩转Kaggle之Titanic(3):该用哪个特征啊？</a></h2>
+                <div class="summary"><p>接上回。</p>
+<p>上回说到我们准备好了数据，可以进行特征提取了。</p>
+<p>呃，其实这里是我用词不当，特征提取(Feature extraction)是从不规则数据中提取出特征，转化为我们的分类期可以用的形式。比如说将自然文本提取词频啦，词语的前后关系啦……做成类似我们使用的这种表格的形式。这也是可以再开一个系列讲的东西。这里也不赘述了。</p>
+<p>这一篇我想讲的其实是特征选取(Feature selection)。换句话说就是计算那些东西该输进分类器里，哪些该扔掉。</p>
+<p>为什么要选取特征？把所有的数据都输进分类器里让他自己训练不好么？</p>
+<p>还真不好。</p>
+<p>因为，数据维度加大也就是数据列越多会导致分类期的训练时间飞速上涨。</p>
+<p>我们这回用的数据就那么几列，怎样都无所谓了。但是给你一段淘宝啊亚马逊啊的交易数据或者人类遗传编码数据呢，那可是轻轻松松破百万列的数据啊。要是都扔进分类器里应算，那你就做好准备算到天荒地老吧。(去超算中心一包就包年的土豪们，请自动无视这段话。)</p>
+<p>另外，将多余数据加入到分类器也会增加过度拟合(over-fitting)的风险。</p>
+<p>什么是过度拟合呢？简单来说就是分类器计算出来的规则太过于契合训练集导致它在训练集外的效果下降。再举个例子，假如现在有一个判断性别的任务，给的数据有Y染色体数目，发色，头发长度，肤色，指甲长度。正确情况下，分类器应该只根据Y染色体数目判断性别。但一旦分类器过拟合了，它就可能拟合出Y染色体数目不为零 ...</p>
+                    <a class="btn btn-default btn-xs" href="https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic3gai-yong-na-ge-te-zheng-a.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="https://zwy1135.github.io/zhuan-tou-python3liao.html">转投python3了</a></h2>
                 <div class="summary"><p>这几天关注了一下 python3 的兼容性情况，发现我平时常用的包都早就兼容 python3 了。又想起前段时间折腾的要死的 python2 编码问题，总觉的是时候拥抱新技术了。于是呢这一篇博客就成了我用 python3 版的 pelican 编译的第一篇博客了，可喜可贺，特此留念。</p>
 <p>另外这几天发现了一个叫 conda 的 python 包管理器，甚是好用啊。最主要的是它用二进制安装包的形式来管理各种 python 包，而不是像 pip 一样管理源码包。这对于像我这种主要使用 windows 的家伙简直是天大的福音啊。从此更新 numpy 和 scipy 再也不用自己去下安装包了。再也不用折腾 lapack 和 blas 这种蛋疼得问题库了。</p>
@@ -176,6 +192,11 @@
 
                 <li class="list-group-item"><a href="https://zwy1135.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group" id="tags">
+                        <li class="list-group-item tag-0">
+                            <a href="https://zwy1135.github.io/tag/python.html">
+                                python
+                            </a>
+                        </li>
                         <li class="list-group-item tag-1">
                             <a href="https://zwy1135.github.io/tag/machine-learning.html">
                                 Machine Learning
@@ -186,14 +207,9 @@
                                 Scikit-Learn
                             </a>
                         </li>
-                        <li class="list-group-item tag-1">
-                            <a href="https://zwy1135.github.io/tag/python.html">
-                                python
-                            </a>
-                        </li>
                         <li class="list-group-item tag-4">
-                            <a href="https://zwy1135.github.io/tag/conda.html">
-                                conda
+                            <a href="https://zwy1135.github.io/tag/sui-bi.html">
+                                随笔
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -202,8 +218,8 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="https://zwy1135.github.io/tag/sui-bi.html">
-                                随笔
+                            <a href="https://zwy1135.github.io/tag/conda.html">
+                                conda
                             </a>
                         </li>
                     </ul>
