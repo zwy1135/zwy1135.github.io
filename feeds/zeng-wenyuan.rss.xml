@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>观测站</title><link>https://zwy1135.github.io/</link><description></description><atom:link href="https://zwy1135.github.io/feeds%5Czeng-wenyuan.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 20 Aug 2014 00:00:00 +0800</lastBuildDate><item><title>玩转Kaggle之Titanic(3):该用哪个特征啊？</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic3gai-yong-na-ge-te-zheng-a.html</link><description>&lt;p&gt;接上回。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>观测站</title><link>https://zwy1135.github.io/</link><description></description><atom:link href="https://zwy1135.github.io/feeds%5Czeng-wenyuan.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 22 Aug 2014 00:00:00 +0800</lastBuildDate><item><title>玩转Kaggle之Titanic(4):按图索器</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic4an-tu-suo-qi.html</link><description>&lt;p&gt;接上回。&lt;/p&gt;
+&lt;p&gt;上回我们筛选了特征。现在就该把数据输进分类器里开始训练分类起了。&lt;/p&gt;
+&lt;p&gt;慢着，我们好像漏了什么关键的东西。。。。。。。对了，我们还没决定用哪个分类器呐，到底用那种分类器才好？&lt;/p&gt;
+&lt;p&gt;这可是个见功底的大问题啊，这分类器万一选不好，训练时间加长还不是问题，万一分类的准确程度达不到要求，我们辛辛苦苦处理出来数据的努力就全泡汤了。到底我们该怎么选分类器啊？有没有什么猴子都能看懂的秘籍，让我们这种什么经验都没有的菜鸟也能方便的学会怎么选分类器啊。&lt;/p&gt;
+&lt;p&gt;嘿，还真让我找到了这么个东西。我把它称之为究极无敌超超超方便策略选取图。有了这幅图，妈妈再也不用担心我们碰到问题没有头绪了。&lt;/p&gt;
+&lt;p&gt;废话少说，一图胜千言。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="ml_map" src="/image/ml_map.png" /&gt;&lt;/p&gt;
+&lt;p&gt;(大家看了就知道，这图是我从scikit-learn官网文档上，弄下来的。连接在&lt;a href="http://scikit-learn.org/stable/tutorial/machine_learning_map/index.html"&gt;这里&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;有图在手，我们可以选分类器了。让我来看看，我们有类别(Categories)数据，有Label，数据量在100K以下。就决定是你了LinearSVC。&lt;/p&gt;
+&lt;p&gt;好，让我们把数据输进去吧。(其实不应该这时候输进去的。记得我之前说过什么吗？保持对测试集的无知，直到我们的系统大致定型。不过我们又不是实战，就偷偷满足下自己的好奇心好了。)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;classifier&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;LinearSVC&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;classifier&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;classifier&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;predict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;正确率74.641%。。。。真心不高啊。这是最好的结果了么？天知道(肯定不是啊喂，kaggle上有人刷到正确率100%啊)。不过没关系，我们还有好多东西没做那。做完正确率会更高的。&lt;/p&gt;
+&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Fri, 22 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-22:wan-zhuan-kagglezhi-titanic4an-tu-suo-qi.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category></item><item><title>玩转Kaggle之Titanic(3):该用哪个特征啊？</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic3gai-yong-na-ge-te-zheng-a.html</link><description>&lt;p&gt;接上回。&lt;/p&gt;
 &lt;p&gt;上回说到我们准备好了数据，可以进行特征提取了。&lt;/p&gt;
 &lt;p&gt;呃，其实这里是我用词不当，特征提取(Feature extraction)是从不规则数据中提取出特征，转化为我们的分类期可以用的形式。比如说将自然文本提取词频啦，词语的前后关系啦……做成类似我们使用的这种表格的形式。这也是可以再开一个系列讲的东西。这里也不赘述了。&lt;/p&gt;
 &lt;p&gt;这一篇我想讲的其实是特征选取(Feature selection)。换句话说就是计算那些东西该输进分类器里，哪些该扔掉。&lt;/p&gt;

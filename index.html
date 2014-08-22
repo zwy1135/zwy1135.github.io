@@ -61,6 +61,24 @@
         <div class="col-sm-9">
 
             <article>
+                <h2><a href="https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic4an-tu-suo-qi.html">玩转Kaggle之Titanic(4):按图索器</a></h2>
+                <div class="summary"><p>接上回。</p>
+<p>上回我们筛选了特征。现在就该把数据输进分类器里开始训练分类起了。</p>
+<p>慢着，我们好像漏了什么关键的东西。。。。。。。对了，我们还没决定用哪个分类器呐，到底用那种分类器才好？</p>
+<p>这可是个见功底的大问题啊，这分类器万一选不好，训练时间加长还不是问题，万一分类的准确程度达不到要求，我们辛辛苦苦处理出来数据的努力就全泡汤了。到底我们该怎么选分类器啊？有没有什么猴子都能看懂的秘籍，让我们这种什么经验都没有的菜鸟也能方便的学会怎么选分类器啊。</p>
+<p>嘿，还真让我找到了这么个东西。我把它称之为究极无敌超超超方便策略选取图。有了这幅图，妈妈再也不用担心我们碰到问题没有头绪了。</p>
+<p>废话少说，一图胜千言。</p>
+<p><img alt="ml_map" src="/image/ml_map.png" /></p>
+<p>(大家看了就知道，这图是我从scikit-learn官网文档上，弄下来的。连接在<a href="http://scikit-learn.org/stable/tutorial/machine_learning_map/index.html">这里</a>)</p>
+<p>有图在手，我们可以选分类器了。让我来看看，我们有类别(Categories)数据，有Label，数据量在100K以下。就决定是你了LinearSVC。</p>
+<p>好，让我们把数据输进去吧。(其实不应该这时候输进去的。记得我之前说过什么吗？保持对测试集的无知，直到我们的系统大致定型。不过我们又不是实战，就偷偷满足下自己的好奇心好了。)</p>
+<div class="highlight"><pre><span class="n">classifier</span> <span class="o">=</span> <span class="n">LinearSVC</span><span class="p">()</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data ...</span></pre></div>
+                    <a class="btn btn-default btn-xs" href="https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic4an-tu-suo-qi.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic3gai-yong-na-ge-te-zheng-a.html">玩转Kaggle之Titanic(3):该用哪个特征啊？</a></h2>
                 <div class="summary"><p>接上回。</p>
 <p>上回说到我们准备好了数据，可以进行特征提取了。</p>
@@ -192,9 +210,9 @@
 
                 <li class="list-group-item"><a href="https://zwy1135.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group" id="tags">
-                        <li class="list-group-item tag-0">
-                            <a href="https://zwy1135.github.io/tag/python.html">
-                                python
+                        <li class="list-group-item tag-1">
+                            <a href="https://zwy1135.github.io/tag/scikit-learn.html">
+                                Scikit-Learn
                             </a>
                         </li>
                         <li class="list-group-item tag-1">
@@ -203,13 +221,8 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-1">
-                            <a href="https://zwy1135.github.io/tag/scikit-learn.html">
-                                Scikit-Learn
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="https://zwy1135.github.io/tag/sui-bi.html">
-                                随笔
+                            <a href="https://zwy1135.github.io/tag/python.html">
+                                python
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -220,6 +233,11 @@
                         <li class="list-group-item tag-4">
                             <a href="https://zwy1135.github.io/tag/conda.html">
                                 conda
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="https://zwy1135.github.io/tag/sui-bi.html">
+                                随笔
                             </a>
                         </li>
                     </ul>
