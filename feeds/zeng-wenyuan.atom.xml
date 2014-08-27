@@ -1,5 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>观测站</title><link href="https://zwy1135.github.io/" rel="alternate"></link><link href="https://zwy1135.github.io/feeds%5Czeng-wenyuan.atom.xml" rel="self"></link><id>https://zwy1135.github.io/</id><updated>2014-08-22T00:00:00+08:00</updated><entry><title>玩转Kaggle之Titanic(4):按图索器</title><link href="https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic4an-tu-suo-qi.html" rel="alternate"></link><updated>2014-08-22T00:00:00+08:00</updated><author><name>Zeng Wenyuan</name></author><id>tag:zwy1135.github.io,2014-08-22:wan-zhuan-kagglezhi-titanic4an-tu-suo-qi.html</id><summary type="html">&lt;p&gt;接上回。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>观测站</title><link href="https://zwy1135.github.io/" rel="alternate"></link><link href="https://zwy1135.github.io/feeds%5Czeng-wenyuan.atom.xml" rel="self"></link><id>https://zwy1135.github.io/</id><updated>2014-08-27T00:00:00+08:00</updated><entry><title>玩转Kaggle之Titanic(5):参数调优——燃烧吧CPU</title><link href="https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic5can-shu-diao-you-ran-shao-ba-cpu.html" rel="alternate"></link><updated>2014-08-27T00:00:00+08:00</updated><author><name>Zeng Wenyuan</name></author><id>tag:zwy1135.github.io,2014-08-27:wan-zhuan-kagglezhi-titanic5can-shu-diao-you-ran-shao-ba-cpu.html</id><summary type="html">&lt;p&gt;接上回。&lt;/p&gt;
+&lt;p&gt;上回我们确定了模型。也用默认参数偷跑了一下测试集，效果一般般。所以，我们这会就来讲讲怎么才能把参数调到最好吧。&lt;/p&gt;
+&lt;p&gt;既然要参数调优，我们就需要一个评判优劣的标准吧。要用什么所标准才好？当然是结果了。正所谓效果好才是真的好，我们所有的努力都是为了追求一个好的分类结果。那么，用结果作为评判标准就是顺理成章的事情了。&lt;/p&gt;
+&lt;p&gt;呃，好像漏了点什么东西。我们用什么的结果作为评判标准啊？既然我们要测试效果，那么就用测试集的分类正确率好了。错！！你忘了我前面反复讲的东西了么？在系统定型之前不要碰测试集！赶紧给我滚回去用训练集去。&lt;/p&gt;
+&lt;p&gt;好吧，我们来用训练集。但是训练集都用来训练了，再用它测试，结果能准么？肯定不准。那么怎么把训练集用起来呢？这就要讲到本章第一个方法了。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3&gt;交叉验证(Cross Validation)&lt;/h3&gt;
+&lt;p&gt;既然要做效果测试那么就不能用相同的数据既做训练又做测试了，但我们只有一个训练集可以用啊，怎么办呢？一个字：拆。把训练及再做拆分，拆出一个训练集和测试集出来，用新的训练集做训练，新的测试集做测试，这样就避免了同一组数据既做训练又做测试的问题了。但这样出来的结果能准吗？肯定不准。那怎么办？还是那个字：拆，而且要反复拆。每次换用不同的拆分方法把训练集拆分成新的训练集和测试集。在用这一堆新训练集和测试集对同一个分类器进行训练和测试。把测试的结果汇总起来，我们就可以估计出这个分类器在实际使用中的效果了。(当然，这是在假定训练集反映了实际运用场景中数据的规律的情况，要是使用的训练集根本和实际数据毫无关系的话，我们做什么都白搭。)&lt;/p&gt;
+&lt;p&gt;以上就是交叉验证的意义了。&lt;/p&gt;
+&lt;p&gt;具体怎么做，放码上来。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.cross_validation&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;ShuffleSplit&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;cross_val_score&lt;/span&gt;
+&lt;span class="n"&gt;classifier&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;LinearSVC&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#我们的数据没有什么顺序相关性，所以这里就用随机抽取的方法拆出10组训练集和测试集&lt;/span&gt;
+&lt;span class="n"&gt;cv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ShuffleSplit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;scores&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cross_val_score&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;classifier&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;cv&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;cv&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Accuracy is &lt;/span&gt;&lt;span class="si"&gt;%.2f&lt;/span&gt;&lt;span class="s"&gt; (+/- &lt;/span&gt;&lt;span class="si"&gt;%.2f&lt;/span&gt;&lt;span class="s"&gt;)&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;scores&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="n"&gt;scores&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;得到的结果是0.80 (+/- 0.07)符合我们上次得到的结果了。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;有了评判标准之后，我们就可以做参数调优了。到底怎么调？有没有什么简单易懂的现代方法好啊确定最优参数啊。&lt;/p&gt;
+&lt;p&gt;还真没有。现在的参数确定和星座算命一样，说多了都是玄学啊。那怎么办？&lt;/p&gt;
+&lt;p&gt;别急，神说了：给我无限的运算力，我能用穷举法解决一切问题。虽然我们没有无限的运算力，可还是可以试一试穷举的。&lt;/p&gt;
+&lt;p&gt;那还等什么，赶紧的一个个参数试啊。&lt;/p&gt;
+&lt;p&gt;慢着，现在是信息时代了，一切都要自动化。人生苦短，可不能把时间浪费在设参数这种没意义的事情上，这就要请出本章的第二种方法了。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3&gt;网格搜索(Grid Search)&lt;/h3&gt;
+&lt;p&gt;网格搜索，作为最基础的参数确定方法。在每一个机器学习库中都会提供。其主要功能就是根据用户提供的所有可能的参数，自动排列出所有的组合，然后一个个应用到模型中计算出效果最好的参数组合。&lt;/p&gt;
+&lt;p&gt;使用方法，惯例打码。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.grid_search&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;GridSearchCV&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;GSC&lt;/span&gt;
+&lt;span class="c"&gt;#因为线性SVC也可以归在SVC里面，所以就放在SVC里一起算了&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.svm&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;SVC&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.cross_validation&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;ShuffleSplit&lt;/span&gt;
+
+&lt;span class="n"&gt;svc_parameter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;C&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;logspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+             &lt;span class="s"&gt;&amp;#39;kernel&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;linear&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;rbf&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sigmoid&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+             &lt;span class="s"&gt;&amp;#39;degree&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+             &lt;span class="s"&gt;&amp;#39;gamma&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mf"&gt;0.1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+             &lt;span class="s"&gt;&amp;#39;coef0&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mf"&gt;0.1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+             &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="c"&gt;#这里一定要设置max_iter，不然万一某个模型不收敛那就要算到天荒地老了&lt;/span&gt;
+&lt;span class="n"&gt;classifier&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SVC&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_iter&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;1e6&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;cv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ShuffleSplit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;gsc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;GSC&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;classifier&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;tree_parameter&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;cv&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;cv&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;verbose&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;fitting data&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;gsc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;fitdone&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;bestClassifier&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;gsc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;best_estimator_&lt;/span&gt;
+&lt;span class="n"&gt;score&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;gsc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;best_score_&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;best&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;score&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;启动程序，现在你可以从电脑前离开，去喝个咖啡看场电影，洗个澡，睡一觉。等你醒来的时候，你就会得到。。。。。。。。。。。。。。。。一个算烧掉的CPU。&lt;/p&gt;
+&lt;p&gt;开玩笑的，不过这段程序运算量很大是真的。博主我i5的CPU算了超过六个小时，各位可以看情况估计下自己的等待时间。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;好了，到这里我们是终于把我们的整个分类系统完成了。真是激动人心的时刻啊。&lt;/p&gt;
+&lt;p&gt;好，我们终于要正式对测试集下手了。predict。。。save。。。上传到Kaggle。。。最终结果。。。正确率77.99%。刚好卡在benchmark的位置。要想再往上提就要有特别的机器学习技巧了。这里按下不表。&lt;/p&gt;
+&lt;p&gt;所有功能统合在一起的程序，等我改天整理好之后再发一篇总结吧。这一系列文章的主要内容就差不多到这里了。&lt;/p&gt;
+&lt;p&gt;感谢能耐着性子看到这里的朋友。如果大家发现了什么错漏的地方，希望能不吝赐教。&lt;/p&gt;
+&lt;p&gt;谢谢各位。让我们下一个系列再见。&lt;/p&gt;
+&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</summary><category term="Machine Learning"></category><category term="Scikit-Learn"></category><category term="python"></category></entry><entry><title>玩转Kaggle之Titanic(4):按图索器</title><link href="https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic4an-tu-suo-qi.html" rel="alternate"></link><updated>2014-08-22T00:00:00+08:00</updated><author><name>Zeng Wenyuan</name></author><id>tag:zwy1135.github.io,2014-08-22:wan-zhuan-kagglezhi-titanic4an-tu-suo-qi.html</id><summary type="html">&lt;p&gt;接上回。&lt;/p&gt;
 &lt;p&gt;上回我们筛选了特征。现在就该把数据输进分类器里开始训练分类起了。&lt;/p&gt;
 &lt;p&gt;慢着，我们好像漏了什么关键的东西。。。。。。。对了，我们还没决定用哪个分类器呐，到底用那种分类器才好？&lt;/p&gt;
 &lt;p&gt;这可是个见功底的大问题啊，这分类器万一选不好，训练时间加长还不是问题，万一分类的准确程度达不到要求，我们辛辛苦苦处理出来数据的努力就全泡汤了。到底我们该怎么选分类器啊？有没有什么猴子都能看懂的秘籍，让我们这种什么经验都没有的菜鸟也能方便的学会怎么选分类器啊。&lt;/p&gt;
