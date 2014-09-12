@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>观测站</title><link>https://zwy1135.github.io/</link><description></description><atom:link href="https://zwy1135.github.io/feeds%5Czeng-wenyuan.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 06 Sep 2014 00:00:00 +0800</lastBuildDate><item><title>玩转Kaggle番外篇(0):没毛线你说个图啊</title><link>https://zwy1135.github.io/wan-zhuan-kagglefan-wai-pian-0mei-mao-xian-ni-shuo-ge-tu-a.html</link><description>&lt;p&gt;没错，不要怀疑你的眼睛，玩转kaggle系列出番外了。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>观测站</title><link>https://zwy1135.github.io/</link><description></description><atom:link href="https://zwy1135.github.io/feeds%5Czeng-wenyuan.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 12 Sep 2014 00:00:00 +0800</lastBuildDate><item><title>玩转Kaggle之：小曾教你一秒变神棍(0):施主要不要算一卦啊</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-0shi-zhu-yao-bu-yao-suan-yi-gua-a.html</link><description>&lt;p&gt;大家好，我又回来了。&lt;/p&gt;
+&lt;p&gt;在Titanic系列中，我们挑战了一下分类(Classification)问题。这回我们来干什么呢？机器学习三大主流问题：分类，聚类，回归。我们做过了分类，而聚类这种从理论上就没有标准答案的东西是不可能出现在Kaggle这种竞赛类网站上面的。所以我们这回来做回归吧。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;那到底哪个问题是回归问题啊？&lt;/p&gt;
+&lt;p&gt;不急，我们先来看看回归问题常用在那些场景。在Titanic系列的问题考察一章中我们说到。回归问题就是根据有标记数据求数值结果的问题，它反映的是结果和其他数据之间的变化关系。说道变化关系，我们能拿它来做什么呢？&lt;/p&gt;
+&lt;p&gt;大仙，您帮我算一卦，我面的这支股票什么时候能涨到1000%啊？&lt;/p&gt;
+&lt;p&gt;没错，这就是回归模型的最主要应用场景——数值预测。预测股票的涨跌，预测产品的销量，预测双十一的时候你老婆到底会花掉多少钱。&lt;/p&gt;
+&lt;p&gt;那Kaggle上到底有没有这种场景的问题啊？我们来看看，还真有&lt;a href="http://www.kaggle.com/c/bike-sharing-demand"&gt;Bike Sharing Demand&lt;/a&gt; ，预测各种情况下自行车租借量。就决定是他了。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;问题考察我们做完了，我们下一步该做什么呢？这位同学上课要认真听啊，我们这些出来占星算命的(什么，你说你不是算命的，难道你不知道用机器学习做预测就是传说中的正版电脑算命么！)，最重要的就是做到知己知彼百战不殆。这下一步当然是开始收集目标数据了。&lt;/p&gt;
+&lt;p&gt;我们把数据从Kaggle上载下来，老规矩，先把测试数据集封存留档。我们来看看训练集吧。&lt;/p&gt;
+&lt;p&gt;训练集里有时间，季节，是否假日，天气等等特征，最重要的还有我们要求的租借量。除了时间以外，其他的全是数值数据，时间也可以转化成数值。最重要的是没有任何一条数据缺失，简直是令人梦寐以求的完美数据啊。这么美的数据，我怎么忍心去改动他呢？我们这回就不做数据规范化和特征选取了吧。(喂喂，分明是你丫想偷懒吧。。。)&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;数据和特征准备好了，我们该选区模型了吧。慢着，好像有点不对劲啊。看看这数据，2012年的租借量要远远多于2011年的啊。这数据既在一天这内有涨落变化，而且还在以年为单位的时间尺度上还有变化，现有的模型好像吃不消啊。怎么办怎么办?!蠢货，不要慌。万一让客户看出你没办法你以后还算不算命了。这种时候就应该高深莫测的掐指一算，然后再灵光一闪：诶，在幼儿园里，老师教我们，团结力量大。一个模型不行我们就上两个，两个不行我们就上三个，再不行我们就上Boost。这个办法好，我真是太机智了。&lt;/p&gt;
+&lt;p&gt;让我们来看看该上什么模型，从数据里我们可以看出，虽然租借量在年际间不断变化但是他在短时间内，比如说在一天之内的分布情况几乎是相同的。所以呢，我们就只需要做一个回归模型预测租借量在年际间的变化，再做另一个回归模型预测租借量在短期内的分布情况，两个一乘就是我们要的租借量数据了。&lt;/p&gt;
+&lt;p&gt;这方案真是太合理了，我都不想做参数选择了，直接用默认参数实施吧。(屏幕前的好孩子不要学我这个懒惰的人啊)&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;好了，终于到了激动人心的方案实施阶段。按我夜阅千剧的经验，这种高潮时刻肯定是应该播放下集预告啦。大家要期待明天的节目哦。&lt;/p&gt;
+&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Fri, 12 Sep 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-09-12:wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-0shi-zhu-yao-bu-yao-suan-yi-gua-a.html</guid><category>Machine Learning</category><category>Scikit-learn</category><category>python</category><category>kaggle</category></item><item><title>玩转Kaggle番外篇(0):没毛线你说个图啊</title><link>https://zwy1135.github.io/wan-zhuan-kagglefan-wai-pian-0mei-mao-xian-ni-shuo-ge-tu-a.html</link><description>&lt;p&gt;没错，不要怀疑你的眼睛，玩转kaggle系列出番外了。&lt;/p&gt;
 &lt;p&gt;一个完整机器学习流程所要用到的东西，在本篇基本上讲了一遍。特地开个番外到底要讲什么呢？这还要问么，题目早已出卖了博主。没错就是要讲怎么画图。&lt;/p&gt;
 &lt;p&gt;说到图片，这可是个好东西啊。俗话说一图胜千言，图片的信息容量和视觉表现力可不是干巴巴的文字能比得上的。不管是忽悠老师，对付上司还是坑害投资人，只要你需要向别人讲解什么的地方，你都需要一门特别的作图技巧。想像一下，假如有人正在向你推销他的成果，但是讲啦大半个钟头，你连一张图都没见到，你会是什么反应。对，没图你讲个毛线，自觉出门右转。&lt;/p&gt;
 &lt;p&gt;言归正传，我们来讲作图。既然要做图，那就要有作图的工具吧。按照本系列一贯的画风，我们还是选用python作为我们的的编程语言。说道python的作图工具，那首当其冲的就是大名鼎鼎的matplotlib了。matplotlib作为最著名的python做图库，简单易用，功能完备，最重要的是其作图函数和matlab近似。这么好用的东西不能不给大家推荐下。&lt;/p&gt;
@@ -75,7 +93,7 @@
 &lt;hr /&gt;
 &lt;p&gt;bokeh的能耐远远不止这点基本功能，有兴趣的朋友可以了解下他们的&lt;a href="http://bokeh.pydata.org/index.html"&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;这回就到这吧。各位，下回见。&lt;/p&gt;
-&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Sat, 06 Sep 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-09-06:wan-zhuan-kagglefan-wai-pian-0mei-mao-xian-ni-shuo-ge-tu-a.html</guid><category>Machine Learning</category><category>Bokeh</category><category>python</category></item><item><title>笔试有感</title><link>https://zwy1135.github.io/bi-shi-you-gan.html</link><description>&lt;p&gt;今天去阿里的笔试。&lt;/p&gt;
+&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Sat, 06 Sep 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-09-06:wan-zhuan-kagglefan-wai-pian-0mei-mao-xian-ni-shuo-ge-tu-a.html</guid><category>Machine Learning</category><category>Bokeh</category><category>python</category><category>kaggle</category></item><item><title>笔试有感</title><link>https://zwy1135.github.io/bi-shi-you-gan.html</link><description>&lt;p&gt;今天去阿里的笔试。&lt;/p&gt;
 &lt;p&gt;笔试分两部分，一部分选择，一部分编程。我做完选择之后，顺手点了提交。结果告诉我两部分是一起提交的。结果八十分钟的编程时间都浪费在客服那恶心的一分钟直接断线系统上了。&lt;/p&gt;
 &lt;p&gt;这让我说什么好。。。。。。。这时候只要微笑就好了吧。&lt;/p&gt;
 &lt;p&gt;算了，抱怨也没什么意思。还是继续刷刷LeetCode，准备下一家吧。&lt;/p&gt;
@@ -143,7 +161,7 @@
 &lt;p&gt;所有功能统合在一起的程序，等我改天整理好之后再发一篇总结吧。这一系列文章的主要内容就差不多到这里了。&lt;/p&gt;
 &lt;p&gt;感谢能耐着性子看到这里的朋友。如果大家发现了什么错漏的地方，希望能不吝赐教。&lt;/p&gt;
 &lt;p&gt;谢谢各位。让我们下一个系列再见。&lt;/p&gt;
-&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Wed, 27 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-27:wan-zhuan-kagglezhi-titanic5can-shu-diao-you-ran-shao-ba-cpu.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category></item><item><title>玩转Kaggle之Titanic(4):按图索器</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic4an-tu-suo-qi.html</link><description>&lt;p&gt;接上回。&lt;/p&gt;
+&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Wed, 27 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-27:wan-zhuan-kagglezhi-titanic5can-shu-diao-you-ran-shao-ba-cpu.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category><category>kaggle</category></item><item><title>玩转Kaggle之Titanic(4):按图索器</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic4an-tu-suo-qi.html</link><description>&lt;p&gt;接上回。&lt;/p&gt;
 &lt;p&gt;上回我们筛选了特征。现在就该把数据输进分类器里开始训练分类起了。&lt;/p&gt;
 &lt;p&gt;慢着，我们好像漏了什么关键的东西。。。。。。。对了，我们还没决定用哪个分类器呐，到底用那种分类器才好？&lt;/p&gt;
 &lt;p&gt;这可是个见功底的大问题啊，这分类器万一选不好，训练时间加长还不是问题，万一分类的准确程度达不到要求，我们辛辛苦苦处理出来数据的努力就全泡汤了。到底我们该怎么选分类器啊？有没有什么猴子都能看懂的秘籍，让我们这种什么经验都没有的菜鸟也能方便的学会怎么选分类器啊。&lt;/p&gt;
@@ -160,7 +178,7 @@
 
 
 &lt;p&gt;正确率74.641%。。。。真心不高啊。这是最好的结果了么？天知道(肯定不是啊喂，kaggle上有人刷到正确率100%啊)。不过没关系，我们还有好多东西没做那。做完正确率会更高的。&lt;/p&gt;
-&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Fri, 22 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-22:wan-zhuan-kagglezhi-titanic4an-tu-suo-qi.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category></item><item><title>玩转Kaggle之Titanic(3):该用哪个特征啊？</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic3gai-yong-na-ge-te-zheng-a.html</link><description>&lt;p&gt;接上回。&lt;/p&gt;
+&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Fri, 22 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-22:wan-zhuan-kagglezhi-titanic4an-tu-suo-qi.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category><category>kaggle</category></item><item><title>玩转Kaggle之Titanic(3):该用哪个特征啊？</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic3gai-yong-na-ge-te-zheng-a.html</link><description>&lt;p&gt;接上回。&lt;/p&gt;
 &lt;p&gt;上回说到我们准备好了数据，可以进行特征提取了。&lt;/p&gt;
 &lt;p&gt;呃，其实这里是我用词不当，特征提取(Feature extraction)是从不规则数据中提取出特征，转化为我们的分类期可以用的形式。比如说将自然文本提取词频啦，词语的前后关系啦……做成类似我们使用的这种表格的形式。这也是可以再开一个系列讲的东西。这里也不赘述了。&lt;/p&gt;
 &lt;p&gt;这一篇我想讲的其实是特征选取(Feature selection)。换句话说就是计算那些东西该输进分类器里，哪些该扔掉。&lt;/p&gt;
@@ -194,7 +212,7 @@
 
 &lt;hr /&gt;
 &lt;p&gt;另外呢，从广义上来说，特征选取也是一个数据降维的过程。所以也可以用PCA这类的方法来做。有兴趣的同学可以看一看这个&lt;a href="scikit-learn.org/stable/modules/decomposition.html"&gt;链接&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Wed, 20 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-20:wan-zhuan-kagglezhi-titanic3gai-yong-na-ge-te-zheng-a.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category></item><item><title>转投python3了</title><link>https://zwy1135.github.io/zhuan-tou-python3liao.html</link><description>&lt;p&gt;这几天关注了一下 python3 的兼容性情况，发现我平时常用的包都早就兼容 python3 了。又想起前段时间折腾的要死的 python2 编码问题，总觉的是时候拥抱新技术了。于是呢这一篇博客就成了我用 python3 版的 pelican 编译的第一篇博客了，可喜可贺，特此留念。&lt;/p&gt;
+&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Wed, 20 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-20:wan-zhuan-kagglezhi-titanic3gai-yong-na-ge-te-zheng-a.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category><category>kaggle</category></item><item><title>转投python3了</title><link>https://zwy1135.github.io/zhuan-tou-python3liao.html</link><description>&lt;p&gt;这几天关注了一下 python3 的兼容性情况，发现我平时常用的包都早就兼容 python3 了。又想起前段时间折腾的要死的 python2 编码问题，总觉的是时候拥抱新技术了。于是呢这一篇博客就成了我用 python3 版的 pelican 编译的第一篇博客了，可喜可贺，特此留念。&lt;/p&gt;
 &lt;p&gt;另外这几天发现了一个叫 conda 的 python 包管理器，甚是好用啊。最主要的是它用二进制安装包的形式来管理各种 python 包，而不是像 pip 一样管理源码包。这对于像我这种主要使用 windows 的家伙简直是天大的福音啊。从此更新 numpy 和 scipy 再也不用自己去下安装包了。再也不用折腾 lapack 和 blas 这种蛋疼得问题库了。&lt;/p&gt;
 &lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Tue, 19 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-19:zhuan-tou-python3liao.html</guid><category>python</category><category>conda</category></item><item><title>玩转Kaggle之Titanic(2):好大一坨数据啊</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic2hao-da-yi-tuo-shu-ju-a.html</link><description>&lt;p&gt;接上回。&lt;/p&gt;
 &lt;p&gt;上回我们界定了我们要处理的问题，接下来就应该准备数据了。&lt;/p&gt;
@@ -390,7 +408,7 @@
 
 
 &lt;p&gt;好了，数据就准备到这里，我们进入下一步。特征提取。&lt;/p&gt;
-&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Fri, 15 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-15:wan-zhuan-kagglezhi-titanic2hao-da-yi-tuo-shu-ju-a.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category></item><item><title>玩转Kaggle之Titanic(1):这货到底在问什么？</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic1zhe-huo-dao-di-zai-wen-shi-yao.html</link><description>&lt;p&gt;接上回。&lt;/p&gt;
+&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Fri, 15 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-15:wan-zhuan-kagglezhi-titanic2hao-da-yi-tuo-shu-ju-a.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category><category>kaggle</category></item><item><title>玩转Kaggle之Titanic(1):这货到底在问什么？</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic1zhe-huo-dao-di-zai-wen-shi-yao.html</link><description>&lt;p&gt;接上回。&lt;/p&gt;
 &lt;p&gt;我们在上回扯了一大堆淡，终于把要做的题目定下来了，从这一篇开始就要上干货了，可喜可贺，喜大普奔。。。。。那么，我们究竟要做点什么呢？&lt;/p&gt;
 &lt;p&gt;多家游戏界的大佬们啊用自己的一款款大作告诉我们，关卡开始前一掉要先来一段任务简报舒缓下心情。我们来看看这里面有什么内容。&lt;/p&gt;
 &lt;p&gt;在一望无际的大海上，马上就要沉掉的不沉之舟泰坦尼克载着杰克和罗丝飘荡着缓缓地向着目的地驶去，突然，航路上一座冰山狠狠地撞了过来。。。。。。&lt;/p&gt;
@@ -412,7 +430,7 @@
 &lt;p&gt;现有无标记数据，求连续的数值结果               -&amp;gt; 我也不知道什么问题&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;此外还有根据现象发生的时间求现象间的因果关系之类的问题等等其他问题，因为博主现在也不太熟悉。这里也不作细说。&lt;/p&gt;
-&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Wed, 13 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-13:wan-zhuan-kagglezhi-titanic1zhe-huo-dao-di-zai-wen-shi-yao.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category></item><item><title>玩转Kaggle之Titanic(0):开坑宣言</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic0kai-keng-xuan-yan.html</link><description>&lt;p&gt;观众朋友们，欢迎收看最新一期的Kaggle挑战赛娱乐实况解说。由于博主也是现学现卖，在本系列内容中，你们将不可避免的看到：博主犯二，代码错漏，方法行不通，前面全部推到重来等内容。遇到这种情况，其立即保护好自己的双眼并果断右上方点×。不过，如果有真的猛士能忍下这些糟糕的内容指点我一下的话，请在下方留言，谢谢。&lt;/p&gt;
+&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Wed, 13 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-13:wan-zhuan-kagglezhi-titanic1zhe-huo-dao-di-zai-wen-shi-yao.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category><category>kaggle</category></item><item><title>玩转Kaggle之Titanic(0):开坑宣言</title><link>https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic0kai-keng-xuan-yan.html</link><description>&lt;p&gt;观众朋友们，欢迎收看最新一期的Kaggle挑战赛娱乐实况解说。由于博主也是现学现卖，在本系列内容中，你们将不可避免的看到：博主犯二，代码错漏，方法行不通，前面全部推到重来等内容。遇到这种情况，其立即保护好自己的双眼并果断右上方点×。不过，如果有真的猛士能忍下这些糟糕的内容指点我一下的话，请在下方留言，谢谢。&lt;/p&gt;
 &lt;p&gt;废话不多说，我们开始吧。&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;先进一段背景。&lt;/p&gt;
@@ -435,7 +453,7 @@
 &lt;/blockquote&gt;
 &lt;p&gt;可以看出，上面这六个步骤环环相扣，每一步都构成了后面步骤的基础，一步都马虎不得。&lt;/p&gt;
 &lt;p&gt;在接下来的一系列文章里，我会带着大家一步步走完这整个流程。敬请期待。&lt;/p&gt;
-&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Tue, 12 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-12:wan-zhuan-kagglezhi-titanic0kai-keng-xuan-yan.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category></item><item><title>Hello World！</title><link>https://zwy1135.github.io/hello-world.html</link><description>&lt;p&gt;断断续续折腾了好几天，终于是吧这个博客弄起来了。&lt;/p&gt;
+&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zeng Wenyuan</dc:creator><pubDate>Tue, 12 Aug 2014 00:00:00 +0800</pubDate><guid>tag:zwy1135.github.io,2014-08-12:wan-zhuan-kagglezhi-titanic0kai-keng-xuan-yan.html</guid><category>Machine Learning</category><category>Scikit-Learn</category><category>python</category><category>kaggle</category></item><item><title>Hello World！</title><link>https://zwy1135.github.io/hello-world.html</link><description>&lt;p&gt;断断续续折腾了好几天，终于是吧这个博客弄起来了。&lt;/p&gt;
 &lt;p&gt;用pelican配的github pages，不得不说python2在windows下的编码问题真是令人蛋碎啊。从安装开始就不停的报unicodedecodeError。差点把我搞疯了。这是逼我转投python3的节奏么。&lt;/p&gt;
 &lt;p&gt;不管怎样，问题终究是解决了。解法是在每一个报错的文件里加上&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
