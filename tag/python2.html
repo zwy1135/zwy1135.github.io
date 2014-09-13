@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>玩转Kaggle之：小曾教你一秒变神棍(0):施主要不要算一卦啊 - 观测站</title>
+    <title>python - 观测站</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -11,10 +11,10 @@
     
 
     <!-- Open Graph tags -->
-            <meta property="og:type" content="article"/>
-            <meta property="og:title" content="玩转Kaggle之：小曾教你一秒变神棍(0):施主要不要算一卦啊"/>
-            <meta property="og:url" content="https://zwy1135.github.io/wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-0shi-zhu-yao-bu-yao-suan-yi-gua-a.html"/>
-            <meta property="og:description" content="大家好，我又回来了。 在Titanic系列中，我们挑战了一下分类(Classification)问题。这回我们来干什么呢？机器学习三大主流问题：分类，聚类，回归。我们做过了分类，而聚类这种从理论上就没有标准答案的东西是不可能出现在Kaggle这种竞赛类网站上面的。所以我们这回来做回归吧。 那到底哪个问题是回归问题啊？ 不急，我们先来看看回归问题常用在那些场景。在Titanic系列的问题考察一章中我们说到。回归问题就是根据有标记数据求数值结果的问题，它反映的是结果和其他数据之间的变化关系。说道变化关系，我们能拿它来做什么呢？ 大仙，您帮我算一卦，我面的这支股票什么时候能涨到1000%啊？ 没错，这就是回归模型的最主要应用场景——数值预测。预测股票的涨跌，预测产品的销量，预测双十一的时候你老婆到底会花掉多少钱。 那Kaggle上到底有没有这种场景的问题啊？我们来看看，还真有Bike Sharing Demand ，预测各种情况下自行车租借量。就决定是他了。 问题考察我们做完了，我们下一步该做什么呢？这位同学上课要认真听啊，我们这些出来占星算命的(什么，你说你不是算命的，难道你不知道用机器学习做预测就是传说中的正版电脑算命么！)，最重要的就是做到知己知彼百战不殆。这下一步当然是开始收集目标数据了。 我们把数据从Kaggle上载下来 ..."/>
+            <meta property="og:type" content="website"/>
+            <meta property="og:title" content="观测站"/>
+            <meta property="og:url" content="https://zwy1135.github.io"/>
+            <meta property="og:description" content="观测站"/>
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="https://zwy1135.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -41,7 +41,7 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                        <li class="active">
+                        <li >
                             <a href="https://zwy1135.github.io/category/machine-learning.html">Machine learning</a>
                         </li>
                         <li >
@@ -60,90 +60,36 @@
     <div class="row">
         <div class="col-sm-9">
 
-    <section id="content">
-        <article>
-            <header class="page-header">
-                <h1>
-                    <a href="https://zwy1135.github.io/wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-0shi-zhu-yao-bu-yao-suan-yi-gua-a.html"
-                       rel="bookmark"
-                       title="Permalink to 玩转Kaggle之：小曾教你一秒变神棍(0):施主要不要算一卦啊">
-                        玩转Kaggle之：小曾教你一秒变神棍(0):施主要不要算一卦啊
-                    </a>
-                </h1>
-            </header>
-            <div class="entry-content">
-                <div class="panel">
-                    <div class="panel-body">
-<footer class="post-info">
-    <span class="label label-default">Date</span>
-    <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-09-12T00:00:00"> 周五 12 九月 2014</time>
-    </span>
+            <article>
+                <h2><a href="https://zwy1135.github.io/hello-world.html">Hello World！</a></h2>
+                <div class="summary"><p>断断续续折腾了好几天，终于是吧这个博客弄起来了。</p>
+<p>用pelican配的github pages，不得不说python2在windows下的编码问题真是令人蛋碎啊。从安装开始就不停的报unicodedecodeError。差点把我搞疯了。这是逼我转投python3的节奏么。</p>
+<p>不管怎样，问题终究是解决了。解法是在每一个报错的文件里加上</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="nb">reload</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">setdefaultencoding</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">getfilesystemencoding</span><span class="p">())</span>
+</pre></div>
 
 
-
-<span class="label label-default">Tags</span>
-	<a href="https://zwy1135.github.io/tag/machine-learning.html">Machine Learning</a>
-        /
-	<a href="https://zwy1135.github.io/tag/scikit-learn.html">Scikit-learn</a>
-        /
-	<a href="https://zwy1135.github.io/tag/python.html">python</a>
-        /
-	<a href="https://zwy1135.github.io/tag/kaggle.html">kaggle</a>
-    
-</footer><!-- /.post-info -->                    </div>
-                </div>
-                <p>大家好，我又回来了。</p>
-<p>在Titanic系列中，我们挑战了一下分类(Classification)问题。这回我们来干什么呢？机器学习三大主流问题：分类，聚类，回归。我们做过了分类，而聚类这种从理论上就没有标准答案的东西是不可能出现在Kaggle这种竞赛类网站上面的。所以我们这回来做回归吧。</p>
-<hr />
-<p>那到底哪个问题是回归问题啊？</p>
-<p>不急，我们先来看看回归问题常用在那些场景。在Titanic系列的问题考察一章中我们说到。回归问题就是根据有标记数据求数值结果的问题，它反映的是结果和其他数据之间的变化关系。说道变化关系，我们能拿它来做什么呢？</p>
-<p>大仙，您帮我算一卦，我面的这支股票什么时候能涨到1000%啊？</p>
-<p>没错，这就是回归模型的最主要应用场景——数值预测。预测股票的涨跌，预测产品的销量，预测双十一的时候你老婆到底会花掉多少钱。</p>
-<p>那Kaggle上到底有没有这种场景的问题啊？我们来看看，还真有<a href="http://www.kaggle.com/c/bike-sharing-demand">Bike Sharing Demand</a> ，预测各种情况下自行车租借量。就决定是他了。</p>
-<hr />
-<p>问题考察我们做完了，我们下一步该做什么呢？这位同学上课要认真听啊，我们这些出来占星算命的(什么，你说你不是算命的，难道你不知道用机器学习做预测就是传说中的正版电脑算命么！)，最重要的就是做到知己知彼百战不殆。这下一步当然是开始收集目标数据了。</p>
-<p>我们把数据从Kaggle上载下来，老规矩，先把测试数据集封存留档。我们来看看训练集吧。</p>
-<p>训练集里有时间，季节，是否假日，天气等等特征，最重要的还有我们要求的租借量。除了时间以外，其他的全是数值数据，时间也可以转化成数值。最重要的是没有任何一条数据缺失，简直是令人梦寐以求的完美数据啊。这么美的数据，我怎么忍心去改动他呢？我们这回就不做数据规范化和特征选取了吧。(喂喂，分明是你丫想偷懒吧。。。)</p>
-<hr />
-<p>数据和特征准备好了，我们该选区模型了吧。慢着，好像有点不对劲啊。看看这数据，2012年的租借量要远远多于2011年的啊。这数据既在一天这内有涨落变化，而且还在以年为单位的时间尺度上还有变化，现有的模型好像吃不消啊。怎么办怎么办?!蠢货，不要慌。万一让客户看出你没办法你以后还算不算命了。这种时候就应该高深莫测的掐指一算，然后再灵光一闪：诶，在幼儿园里，老师教我们，团结力量大。一个模型不行我们就上两个，两个不行我们就上三个，再不行我们就上Boost。这个办法好，我真是太机智了。</p>
-<p>让我们来看看该上什么模型，从数据里我们可以看出，虽然租借量在年际间不断变化但是他在短时间内，比如说在一天之内的分布情况几乎是相同的。所以呢，我们就只需要做一个回归模型预测租借量在年际间的变化，再做另一个回归模型预测租借量在短期内的分布情况，两个一乘就是我们要的租借量数据了。</p>
-<p>这方案真是太合理了，我都不想做参数选择了，直接用默认参数实施吧。(屏幕前的好孩子不要学我这个懒惰的人啊)</p>
-<hr />
-<p>好了，终于到了激动人心的方案实施阶段。按我夜阅千剧的经验，这种高潮时刻肯定是应该播放下集预告啦。大家要期待明天的节目哦。</p>
+<p>不小心误入这里的朋友也许可以用上。</p>
+<p>最后感谢一下frantic1048提供的pelican使用<a href="http://frantic1048.com/bo-ke-dan-sheng-ji-ji-yu-githubpelicanchuang-jian-bo-ke-de-zheng-ge-guo-cheng.html">教程</a>。</p>
+<blockquote>
 <p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
-            </div>
-            <!-- /.entry-content -->
-    <hr />
-    <section class="comments" id="comments">
-        <h2>Comments</h2>
-        <div id="disqus_thread"></div>
-        <script type="text/javascript">
-            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-            var disqus_shortname = 'siteofz'; // required: replace example with your forum shortname
-            var disqus_identifier = 'wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-0shi-zhu-yao-bu-yao-suan-yi-gua-a';
-            var disqus_url = 'https://zwy1135.github.io/wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-0shi-zhu-yao-bu-yao-suan-yi-gua-a.html';
-            var disqus_config = function () {
-                this.language = "zh";
-            };
+</blockquote>
+                    <a class="btn btn-default btn-xs" href="https://zwy1135.github.io/hello-world.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
 
-            /* * * DON'T EDIT BELOW THIS LINE * * */
-            (function () {
-                var dsq = document.createElement('script');
-                dsq.type = 'text/javascript';
-                dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
-            Disqus.</a></noscript>
-        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-    </section>
-        </article>
-    </section>
-
+    <ul class="pagination">
+            <li class="prev"><a href="https://zwy1135.github.io/tag\python.html">&laquo;</a>
+            </li>
+                <li class=""><a
+                        href="https://zwy1135.github.io/tag/python.html">1</a></li>
+                <li class="active"><a
+                        href="https://zwy1135.github.io/tag/python2.html">2</a></li>
+            <li class="next disabled"><a href="#">&raquo;</a></li>
+    </ul>
         </div>
         <div class="col-sm-3 well well-sm" id="sidebar">
 

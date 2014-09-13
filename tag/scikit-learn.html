@@ -61,6 +61,29 @@
         <div class="col-sm-9">
 
             <article>
+                <h2><a href="https://zwy1135.github.io/wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-1jiao-ni-qia-zhi-yi-suan-gai-zen-yao-qia.html">玩转Kaggle之：小曾教你一秒变神棍(1):教你掐指一算该怎么掐</a></h2>
+                <div class="summary"><p>接上回。</p>
+<p>上回我们我们哇啦哇啦说啦一大堆，终于把思路理清楚了。现在我们就来把这个系统愉快的实现一下。然后就能在人前高深莫测的掐指一算，甩出一坨预测数据，然后一挥衣袖颇有高手范的飘然而去了。</p>
+<hr />
+<p>主要的流程是这样的：</p>
+<div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="n">readData</span><span class="p">(</span><span class="s">&#39;train.csv&#39;</span><span class="p">)</span>
+<span class="n">trend_model</span> <span class="o">=</span> <span class="n">computeTrendModel</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">distribution</span> <span class="o">=</span> <span class="n">computeDistributionOfDay</span><span class="p">(</span><span class="n">trend_model</span><span class="p">,</span><span class="n">data</span><span class="p">)</span>
+<span class="n">distr_data</span><span class="p">,</span><span class="n">distr_label</span> <span class="o">=</span> <span class="n">buildDataset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="bp">True</span><span class="p">,</span><span class="n">distribution</span><span class="p">)</span>
+<span class="n">distr_model</span> <span class="o">=</span> <span class="n">computeDistributionModel</span><span class="p">(</span><span class="n">distr_data</span><span class="p">,</span><span class="n">distr_label</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">readData</span><span class="p">(</span><span class="s">&#39;test.csv&#39;</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">makePrediction</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="n">trend_model</span><span class="p">,</span><span class="n">distr_model</span><span class="p">)</span>
+</pre></div>
+
+
+<p>首先，我们读入训练数据，将datetime字段设置为索引，用的是这段代码。</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">readData</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path ...</span></pre></div>
+                    <a class="btn btn-default btn-xs" href="https://zwy1135.github.io/wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-1jiao-ni-qia-zhi-yi-suan-gai-zen-yao-qia.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="https://zwy1135.github.io/wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-0shi-zhu-yao-bu-yao-suan-yi-gua-a.html">玩转Kaggle之：小曾教你一秒变神棍(0):施主要不要算一卦啊</a></h2>
                 <div class="summary"><p>大家好，我又回来了。</p>
 <p>在Titanic系列中，我们挑战了一下分类(Classification)问题。这回我们来干什么呢？机器学习三大主流问题：分类，聚类，回归。我们做过了分类，而聚类这种从理论上就没有标准答案的东西是不可能出现在Kaggle这种竞赛类网站上面的。所以我们这回来做回归吧。</p>
@@ -213,16 +236,6 @@
                 <li class="list-group-item"><a href="https://zwy1135.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group" id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="https://zwy1135.github.io/tag/scikit-learn.html">
-                                Scikit-learn
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
-                            <a href="https://zwy1135.github.io/tag/kaggle.html">
-                                kaggle
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="https://zwy1135.github.io/tag/python.html">
                                 python
                             </a>
@@ -232,19 +245,24 @@
                                 Machine Learning
                             </a>
                         </li>
+                        <li class="list-group-item tag-1">
+                            <a href="https://zwy1135.github.io/tag/scikit-learn.html">
+                                Scikit-learn
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="https://zwy1135.github.io/tag/kaggle.html">
+                                kaggle
+                            </a>
+                        </li>
                         <li class="list-group-item tag-4">
-                            <a href="https://zwy1135.github.io/tag/ali.html">
-                                ali
+                            <a href="https://zwy1135.github.io/tag/written-test.html">
+                                Written Test
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="https://zwy1135.github.io/tag/conda.html">
                                 conda
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="https://zwy1135.github.io/tag/sui-bi.html">
-                                随笔
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -258,8 +276,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="https://zwy1135.github.io/tag/written-test.html">
-                                Written Test
+                            <a href="https://zwy1135.github.io/tag/ali.html">
+                                ali
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="https://zwy1135.github.io/tag/sui-bi.html">
+                                随笔
                             </a>
                         </li>
                     </ul>

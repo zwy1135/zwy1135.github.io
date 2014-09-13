@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>玩转Kaggle之：小曾教你一秒变神棍(1):教你掐指一算该怎么掐 - 观测站</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <!-- Open Graph tags -->
+            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="玩转Kaggle之：小曾教你一秒变神棍(1):教你掐指一算该怎么掐"/>
+            <meta property="og:url" content="https://zwy1135.github.io/wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-1jiao-ni-qia-zhi-yi-suan-gai-zen-yao-qia.html"/>
+            <meta property="og:description" content="接上回。 上回我们我们哇啦哇啦说啦一大堆，终于把思路理清楚了。现在我们就来把这个系统愉快的实现一下。然后就能在人前高深莫测的掐指一算，甩出一坨预测数据，然后一挥衣袖颇有高手范的飘然而去了。 主要的流程是这样的： data = readData('train.csv') trend_model = computeTrendModel(data) distribution = computeDistributionOfDay(trend_model,data) distr_data,distr_label = buildDataset(data,True,distribution) distr_model = computeDistributionModel(distr_data,distr_label) test = readData('test.csv') prediction = makePrediction(test,trend_model,distr_model) 首先，我们读入训练数据，将datetime字段设置为索引，用的是这段代码。 def readData(filename): data = pd.read_csv(os.path ..."/>
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://zwy1135.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="https://zwy1135.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="https://zwy1135.github.io/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://zwy1135.github.io/theme/css/style.css" type="text/css"/>
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="https://zwy1135.github.io/" class="navbar-brand">
+观测站            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="https://zwy1135.github.io/category/machine-learning.html">Machine learning</a>
+                        </li>
+                        <li >
+                            <a href="https://zwy1135.github.io/category/sui-bi.html">随笔</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="https://zwy1135.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="https://zwy1135.github.io/wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-1jiao-ni-qia-zhi-yi-suan-gai-zen-yao-qia.html"
+                       rel="bookmark"
+                       title="Permalink to 玩转Kaggle之：小曾教你一秒变神棍(1):教你掐指一算该怎么掐">
+                        玩转Kaggle之：小曾教你一秒变神棍(1):教你掐指一算该怎么掐
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-09-13T00:00:00"> 周六 13 九月 2014</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="https://zwy1135.github.io/tag/machine-learning.html">Machine Learning</a>
+        /
+	<a href="https://zwy1135.github.io/tag/scikit-learn.html">Scikit-learn</a>
+        /
+	<a href="https://zwy1135.github.io/tag/python.html">python</a>
+        /
+	<a href="https://zwy1135.github.io/tag/kaggle.html">kaggle</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>接上回。</p>
+<p>上回我们我们哇啦哇啦说啦一大堆，终于把思路理清楚了。现在我们就来把这个系统愉快的实现一下。然后就能在人前高深莫测的掐指一算，甩出一坨预测数据，然后一挥衣袖颇有高手范的飘然而去了。</p>
+<hr />
+<p>主要的流程是这样的：</p>
+<div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="n">readData</span><span class="p">(</span><span class="s">&#39;train.csv&#39;</span><span class="p">)</span>
+<span class="n">trend_model</span> <span class="o">=</span> <span class="n">computeTrendModel</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">distribution</span> <span class="o">=</span> <span class="n">computeDistributionOfDay</span><span class="p">(</span><span class="n">trend_model</span><span class="p">,</span><span class="n">data</span><span class="p">)</span>
+<span class="n">distr_data</span><span class="p">,</span><span class="n">distr_label</span> <span class="o">=</span> <span class="n">buildDataset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="bp">True</span><span class="p">,</span><span class="n">distribution</span><span class="p">)</span>
+<span class="n">distr_model</span> <span class="o">=</span> <span class="n">computeDistributionModel</span><span class="p">(</span><span class="n">distr_data</span><span class="p">,</span><span class="n">distr_label</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">readData</span><span class="p">(</span><span class="s">&#39;test.csv&#39;</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">makePrediction</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="n">trend_model</span><span class="p">,</span><span class="n">distr_model</span><span class="p">)</span>
+</pre></div>
+
+
+<p>首先，我们读入训练数据，将datetime字段设置为索引，用的是这段代码。</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">readData</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span><span class="n">filename</span><span class="p">))</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">data</span>
+</pre></div>
+
+
+<p>随后，我们就进行这一系列中最有思想含量的双模型训练了。在这，博主我假设租借量是随着时间平稳增长的。所以呢，我将数据拆分成两部分，用日期数据和每日租借量的平均数估计租借量的增长情况的模型。再用小时数据和其他属性估计租借量在短期里的分布情况模型。你问我为什么要这样分？这都是直觉的指引啊。如果你有兴趣也可以试一下其他的分法。</p>
+<p>好了，第一步就是训练增长趋势模型了。恩，把时间和日均租借量做个线性回归就好。(ps：博主曾经做过svm回归。效果没线性回归那么好。至于为什么，各位可以自己思考下。)</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">computeTrendModel</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;count&#39;</span><span class="p">]</span>
+    <span class="n">count_aver</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&quot;1D&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">count_aver</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_julian_date</span><span class="p">()</span>
+    <span class="n">trend_model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">count_aver</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">trend_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">trend_model</span>
+</pre></div>
+
+
+<p>训好趋势模型后，使用趋势模型预测值为基准计算短期租借量的分布。</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">computeDistributionOfDay</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;count&#39;</span><span class="p">]</span>
+    <span class="n">count_aver</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&quot;1D&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">count_aver</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_julian_date</span><span class="p">()</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">count_aver</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&quot;1h&quot;</span><span class="p">,</span><span class="n">fill_method</span><span class="o">=</span><span class="s">&quot;ffill&quot;</span><span class="p">)</span>
+    <span class="n">mean_count</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">count</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">distribution</span> <span class="o">=</span> <span class="n">count</span> <span class="o">/</span> <span class="n">mean_count</span>
+
+    <span class="k">return</span> <span class="n">distribution</span>
+</pre></div>
+
+
+<p>算好分布之后就可以训练分布模型了，这里我使用了ExtraTreesRegressor模型。</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">buildDataset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">is_train</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">distribution</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">drop_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;datetime&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">is_train</span><span class="p">:</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;dis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">distribution</span>
+        <span class="n">drop_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;datetime&#39;</span><span class="p">,</span><span class="s">&#39;casual&#39;</span><span class="p">,</span> <span class="s">&#39;registered&#39;</span><span class="p">,</span><span class="s">&#39;count&#39;</span><span class="p">]</span>
+    <span class="n">data</span><span class="p">[</span><span class="s">&#39;hour&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">hour</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">drop_list</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">is_train</span><span class="p">:</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;dis&#39;</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s">&#39;dis&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span><span class="n">label</span>
+
+<span class="k">def</span> <span class="nf">computeDistributionModel</span><span class="p">(</span><span class="n">distr_data</span><span class="p">,</span><span class="n">distr_label</span><span class="p">):</span>
+    <span class="n">distr_model</span> <span class="o">=</span> <span class="n">ExtraTreesRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">distr_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">distr_data</span><span class="p">,</span><span class="n">distr_label</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">distr_model</span>
+</pre></div>
+
+
+<p>好，两个模型都有了，下面就把它们应用到测试集：</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">makePrediction</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="n">trend_model</span><span class="p">,</span><span class="n">distr_model</span><span class="p">):</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;1D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">test_index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">to_julian_date</span><span class="p">()</span>
+    <span class="n">test_index</span> <span class="o">=</span> <span class="n">test_index</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">test_index</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">test_trend</span> <span class="o">=</span> <span class="n">trend_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_index</span><span class="p">)</span>
+    <span class="n">test_trend</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">test_trend</span><span class="p">)</span>
+    <span class="n">test_trend</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+    <span class="n">test_trend</span> <span class="o">=</span> <span class="n">test_trend</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&quot;1h&quot;</span><span class="p">,</span><span class="n">fill_method</span><span class="o">=</span><span class="s">&quot;ffill&quot;</span><span class="p">)</span>
+    <span class="n">test_trend</span> <span class="o">=</span> <span class="n">test_trend</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">test_trend</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">test_data</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">buildDataset</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="n">test_distr</span> <span class="o">=</span> <span class="n">distr_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+    <span class="n">prediction</span> <span class="o">=</span> <span class="n">test_trend</span><span class="o">*</span><span class="n">test_distr</span>
+
+    <span class="k">return</span> <span class="n">prediction</span>
+</pre></div>
+
+
+<p>大功告成，我们现在得到了对测试集中每个小时租借量的预测。赶紧把把他传上Kaggle看看结果到底如何吧。</p>
+<p>计算中。。。。误差的对数均方根值0.47493，排名169/724，成绩不错啊。而且还是没有做模型间的比较，也没做参数选择。有兴趣的同学可以试一下，肯定能取得更好的成绩的。</p>
+<hr />
+<p>最后，附上整个程序的完整代码：</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">ExtraTreesRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+
+<span class="n">data_path</span> <span class="o">=</span> <span class="s">&#39;./data&#39;</span>
+
+<span class="k">def</span> <span class="nf">readData</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span><span class="n">filename</span><span class="p">))</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">data</span>
+
+
+<span class="k">def</span> <span class="nf">computeTrendModel</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;count&#39;</span><span class="p">]</span>
+    <span class="n">count_aver</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&quot;1D&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">count_aver</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_julian_date</span><span class="p">()</span>
+    <span class="n">trend_model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+    <span class="c">#reg = ExtraTreesRegressor(n_estimators=100,verbose=1)</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">count_aver</span><span class="o">.</span><span class="n">values</span><span class="c">#.reshape((shape[0],1))</span>
+    <span class="n">trend_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">trend_model</span>
+
+<span class="k">def</span> <span class="nf">computeDistributionModel</span><span class="p">(</span><span class="n">distr_data</span><span class="p">,</span><span class="n">distr_label</span><span class="p">):</span>
+    <span class="n">distr_model</span> <span class="o">=</span> <span class="n">ExtraTreesRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">distr_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">distr_data</span><span class="p">,</span><span class="n">distr_label</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">distr_model</span>
+
+<span class="k">def</span> <span class="nf">computeDistributionOfDay</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;count&#39;</span><span class="p">]</span>
+    <span class="n">count_aver</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&quot;1D&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">count_aver</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_julian_date</span><span class="p">()</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">count_aver</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&quot;1h&quot;</span><span class="p">,</span><span class="n">fill_method</span><span class="o">=</span><span class="s">&quot;ffill&quot;</span><span class="p">)</span>
+    <span class="n">mean_count</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">count</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">distribution</span> <span class="o">=</span> <span class="n">count</span> <span class="o">/</span> <span class="n">mean_count</span>
+
+    <span class="k">return</span> <span class="n">distribution</span>
+
+<span class="k">def</span> <span class="nf">buildDataset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">is_train</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">distribution</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">drop_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;datetime&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">is_train</span><span class="p">:</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;dis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">distribution</span>
+        <span class="n">drop_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;datetime&#39;</span><span class="p">,</span><span class="s">&#39;casual&#39;</span><span class="p">,</span> <span class="s">&#39;registered&#39;</span><span class="p">,</span><span class="s">&#39;count&#39;</span><span class="p">]</span>
+    <span class="n">data</span><span class="p">[</span><span class="s">&#39;hour&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">hour</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">drop_list</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">is_train</span><span class="p">:</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;dis&#39;</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s">&#39;dis&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span><span class="n">label</span>
+
+<span class="k">def</span> <span class="nf">makePrediction</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="n">trend_model</span><span class="p">,</span><span class="n">distr_model</span><span class="p">):</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;1D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">test_index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">to_julian_date</span><span class="p">()</span>
+    <span class="n">test_index</span> <span class="o">=</span> <span class="n">test_index</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">test_index</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">test_trend</span> <span class="o">=</span> <span class="n">trend_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_index</span><span class="p">)</span>
+    <span class="n">test_trend</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">test_trend</span><span class="p">)</span>
+    <span class="n">test_trend</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+    <span class="n">test_trend</span> <span class="o">=</span> <span class="n">test_trend</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&quot;1h&quot;</span><span class="p">,</span><span class="n">fill_method</span><span class="o">=</span><span class="s">&quot;ffill&quot;</span><span class="p">)</span>
+    <span class="n">test_trend</span> <span class="o">=</span> <span class="n">test_trend</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">test_trend</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">test_data</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">buildDataset</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="n">test_distr</span> <span class="o">=</span> <span class="n">distr_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+    <span class="n">prediction</span> <span class="o">=</span> <span class="n">test_trend</span><span class="o">*</span><span class="n">test_distr</span>
+
+    <span class="k">return</span> <span class="n">prediction</span>
+
+
+
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">readData</span><span class="p">(</span><span class="s">&#39;train.csv&#39;</span><span class="p">)</span>
+    <span class="n">trend_model</span> <span class="o">=</span> <span class="n">computeTrendModel</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">distribution</span> <span class="o">=</span> <span class="n">computeDistributionOfDay</span><span class="p">(</span><span class="n">trend_model</span><span class="p">,</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">distr_data</span><span class="p">,</span><span class="n">distr_label</span> <span class="o">=</span> <span class="n">buildDataset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="bp">True</span><span class="p">,</span><span class="n">distribution</span><span class="p">)</span>
+    <span class="n">distr_model</span> <span class="o">=</span> <span class="n">computeDistributionModel</span><span class="p">(</span><span class="n">distr_data</span><span class="p">,</span><span class="n">distr_label</span><span class="p">)</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">readData</span><span class="p">(</span><span class="s">&#39;test.csv&#39;</span><span class="p">)</span>
+    <span class="n">prediction</span> <span class="o">=</span> <span class="n">makePrediction</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="n">trend_model</span><span class="p">,</span><span class="n">distr_model</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
+            </div>
+            <!-- /.entry-content -->
+    <hr />
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'siteofz'; // required: replace example with your forum shortname
+            var disqus_identifier = 'wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-1jiao-ni-qia-zhi-yi-suan-gai-zen-yao-qia';
+            var disqus_url = 'https://zwy1135.github.io/wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-1jiao-ni-qia-zhi-yi-suan-gai-zen-yao-qia.html';
+            var disqus_config = function () {
+                this.language = "zh";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
+
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                    <li class="list-group-item"><a href="https://github.com/zwy1135"><i
+                            class="fa fa-我的github-square fa-lg"></i> 我的github
+                    </a></li>
+                    <li class="list-group-item"><a href="mailto:zwy1135@gmail.com"><i
+                            class="fa fa-我的邮箱-square fa-lg"></i> 我的邮箱
+                    </a></li>
+                  </ul>
+                </li>
+
+
+                <li class="list-group-item"><a href="https://zwy1135.github.io/"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Categories</span></h4></a>
+                    <ul class="list-group" id="categories">
+                        <li class="list-group-item">
+                            <a href="https://zwy1135.github.io/category/machine-learning.html">
+                                <i class="fa fa-folder-open fa-lg"></i> Machine Learning
+                            </a>
+                        </li>
+                    </ul>
+                        <li class="list-group-item">
+                            <a href="https://zwy1135.github.io/category/sui-bi.html">
+                                <i class="fa fa-folder-open fa-lg"></i> 随笔
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="list-group-item"><a href="https://zwy1135.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="https://zwy1135.github.io/tag/python.html">
+                                python
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="https://zwy1135.github.io/tag/machine-learning.html">
+                                Machine Learning
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="https://zwy1135.github.io/tag/scikit-learn.html">
+                                Scikit-learn
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="https://zwy1135.github.io/tag/kaggle.html">
+                                kaggle
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="https://zwy1135.github.io/tag/written-test.html">
+                                Written Test
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="https://zwy1135.github.io/tag/conda.html">
+                                conda
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="https://zwy1135.github.io/tag/za-wu.html">
+                                杂物
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="https://zwy1135.github.io/tag/bokeh.html">
+                                Bokeh
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="https://zwy1135.github.io/tag/ali.html">
+                                ali
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="https://zwy1135.github.io/tag/sui-bi.html">
+                                随笔
+                            </a>
+                        </li>
+                    </ul>
+                </li>    
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://scikit-learn.org/stable/index.html" target="_blank">
+                Scikit-Learn
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://www.kaggle.com/" target="_blank">
+                Kaggle
+            </a>
+        </li>
+      </ul>
+    </li>
+
+        </ul>
+    </section>
+
+</aside>        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2014 Zeng Wenyuan
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://zwy1135.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="https://zwy1135.github.io/theme/js/respond.min.js"></script>
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'siteofz'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+</body>
+</html>
