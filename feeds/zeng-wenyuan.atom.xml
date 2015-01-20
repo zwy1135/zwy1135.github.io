@@ -1,5 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>观测站</title><link href="https://zwy1135.github.io/" rel="alternate"></link><link href="https://zwy1135.github.io/feeds%5Czeng-wenyuan.atom.xml" rel="self"></link><id>https://zwy1135.github.io/</id><updated>2014-09-13T00:00:00+08:00</updated><entry><title>玩转Kaggle之：小曾教你一秒变神棍(1):教你掐指一算该怎么掐</title><link href="https://zwy1135.github.io/wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-1jiao-ni-qia-zhi-yi-suan-gai-zen-yao-qia.html" rel="alternate"></link><updated>2014-09-13T00:00:00+08:00</updated><author><name>Zeng Wenyuan</name></author><id>tag:zwy1135.github.io,2014-09-13:wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-1jiao-ni-qia-zhi-yi-suan-gai-zen-yao-qia.html</id><summary type="html">&lt;p&gt;接上回。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>观测站</title><link href="https://zwy1135.github.io/" rel="alternate"></link><link href="https://zwy1135.github.io/feeds%5Czeng-wenyuan.atom.xml" rel="self"></link><id>https://zwy1135.github.io/</id><updated>2015-01-20T00:00:00+08:00</updated><entry><title>OOP的那点事</title><link href="https://zwy1135.github.io/oopde-na-dian-shi.html" rel="alternate"></link><updated>2015-01-20T00:00:00+08:00</updated><author><name>Zeng Wenyuan</name></author><id>tag:zwy1135.github.io,2015-01-20:oopde-na-dian-shi.html</id><summary type="html">&lt;p&gt;隔了几个月，终于是又开始更新了。&lt;/p&gt;
+&lt;p&gt;最近在读《代码之髓》，略有心得，在此记述留赠有缘人吧。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;废话不说，入正题。这次要写的是面向对象编程的话题。当然，我不会在这里絮叨class后面要加几个括号之类的细枝末节。这里要讲的是一些编程思想上的东西。&lt;/p&gt;
+&lt;h3&gt;什么是类？&lt;/h3&gt;
+&lt;p&gt;说起面向对象，最重要的话题就是类了。那到底什么是类呢？圈里一直有两种不同的看法：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mf"&gt;1.&lt;/span&gt;&lt;span class="err"&gt;类就是用户自己定义的数据类型，描述了数据以及数据的使用方法。&lt;/span&gt;
+&lt;span class="mf"&gt;2.&lt;/span&gt;&lt;span class="err"&gt;类是对程序中运行实体的描述，消息在实体之间传递并由实体来处理。&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其实归结起来，还是那个老掉牙的统治与合作的话题。&lt;/p&gt;
+&lt;p&gt;第一种观点，我把它称为统治模式。它把由这种类建立起来的对象统统当作实现任务的工具，至于这些工具怎么使用，使用的效果怎样是由使用者决定的。打个拟人化的比方，对象的工作情况就像下面这段对话：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;大哥，我会干这些这些事情，你给我排任务吧。&lt;/span&gt;
+&lt;span class="err"&gt;行，知道了，你说话，我照办。&lt;/span&gt;
+&lt;span class="err"&gt;大哥，这么干行不通啊。你拿个主意吧。&lt;/span&gt;
+&lt;span class="err"&gt;什么，你要我自己处理？！我不会，你就是打死我我也不会处理的。&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这种思想指导下带来的结果是：你可以很方便的按照任务的划分把类建立起来，但是在被各种类或者对象组合起来使用的时候可能会出现各种诡异的麻烦。&lt;/p&gt;
+&lt;p&gt;具体表现就是：项目写到最后了，要把两个东西组合在一起用，但是这俩破玩意根本不兼容啊，赶紧改一改。什么，这俩破玩意都被几百个地方引用了，一个字母都不能改，怎么办怎么办！！！！！&lt;/p&gt;
+&lt;p&gt;第二种观点，我把它称之为合作模式。它把由这种类建立起来的对象都当作可以独当一面的大牛，对象与对象之间的合作就只需要发个消息就好。它工作起来就像这样：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;这活要我来干？行我知道了。&lt;/span&gt;
+&lt;span class="err"&gt;啊，这里出了问题。没事，我自己处理。&lt;/span&gt;
+&lt;span class="err"&gt;都说了我自己处理了，你就别在旁边唧唧歪歪个不停了，干你自己的活去。&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这种思想导致了：把各种对象组合起来使用的时候异常舒爽，但是建立类的时候，要考虑让它天然的适配各种情况，坑的无比啊。&lt;/p&gt;
+&lt;p&gt;它的表现就是：工期过半了，项目进行的怎样了？什么，你还在写设计报告？！@￥%……&amp;amp;*（（））&lt;/p&gt;
+&lt;p&gt;总而言之，这两种思想就是坑前期还是坑后期的选择，反正是要坑一边的，就看着坑吧。&lt;/p&gt;
+&lt;h3&gt;类的继承&lt;/h3&gt;
+&lt;p&gt;说了类，怎么也绕不过去的就是类的继承了。那到底怎么继承啊？现在主要有三种流派：&lt;/p&gt;
+&lt;p&gt;1、天下一统（一般化与专门化方法）&lt;/p&gt;
+&lt;p&gt;这种流派认为，作为父类的类应该定义所有一般化的方法，而子类呢就将这些方法专门化实现。&lt;/p&gt;
+&lt;p&gt;打个比方，现在有一个类叫做职猿，他有两个功能，领工资，干活。由他派生出两个子类：程序猿和设计猿。程序猿将这两个功能实现为领程序猿工资，干写代码的活。设计猿将这两个功能实现为领设计猿的工资，干设计的活。你想要一个除了领工资和干活外还会在公司里兴风作浪的家伙，不好意思，那不是职猿该干的事。&lt;/p&gt;
+&lt;p&gt;2、海纳百川（共有部分的提取）&lt;/p&gt;
+&lt;p&gt;这种流派认为，作为父类的类应该是子类共有功能的提取，子类各自实现自己的特殊化方法。&lt;/p&gt;
+&lt;p&gt;还拿职猿做例子。职猿是程序猿和设计猿的父类，程序猿和设计猿有什么共同的功能呢——领工资。那么职猿就实现领工资，由程序猿实现自己的写代码，设计猿实现自己的做设计。&lt;/p&gt;
+&lt;p&gt;3、随心所欲（仅仅将类作为代码复用的单位）&lt;/p&gt;
+&lt;p&gt;这种流派认为，哪来这么多乱七八糟的规矩，爷就是喜欢写类，就是喜欢继承。爷爱怎么干怎嘛干，就是任性你管得着吗！&lt;/p&gt;
+&lt;h3&gt;多重继承的天坑&lt;/h3&gt;
+&lt;p&gt;说了继承，就一定要说说多重继承的问题，多重继承有什么问题？还不就是那个命名冲突的问题嘛。&lt;/p&gt;
+&lt;p&gt;还是职猿那个例子。想像一下，公司里程序猿和设计猿干活干得好好的，突然出现了一个家伙，又能写代码又能做设计。那要怎么处理？那还不好办，从程序猿和设计猿多重继承出一个类，程序设计猿。好了，现在你下了一道命令，程序设计猿，干活去吧。他立刻就傻眼了，到底是该写代码还是该做设计啊？&lt;/p&gt;
+&lt;p&gt;那这个问题要怎么处理？还是三种方法：&lt;/p&gt;
+&lt;p&gt;1、禁止多重继承&lt;/p&gt;
+&lt;p&gt;既然命名冲突是多重继承导致的，那直接禁止多重继承不就好了。把公司里的程序设计猿都开掉，就没有任何问题了。那要是需要一个单位同时做程序猿和设计猿的工该怎么办？建立一个新类叫项目组。往里面放一个程序猿和一个设计猿，定义它的干活是程序猿干活并且设计猿干活，问题就解决了。这个新类还可以美其名曰托管类。&lt;/p&gt;
+&lt;p&gt;2、不预先作可能冲突的命名（MixIn方法）&lt;/p&gt;
+&lt;p&gt;既然干活这个方法会引起冲突。那就不预先定义这个方法好了，把各种待实现的功能定义成众多小类，由实际工作的终端类将他们组合起来，自己定义自己的干活方法好了。比如说定义一大串工作清单，领工资，写代码，做设计。再由程序猿继承写代码，再定义自己的干活为写代码。由程序设计猿继承写代码和做设计，再定义自己的干活为写代码和做设计。&lt;/p&gt;
+&lt;p&gt;3、由程序员指定选择的方法&lt;/p&gt;
+&lt;p&gt;你不是不知道要干什么嘛，我告诉你不就完事了……&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;最后吧，其实类会引出这么多问题还是因为他的两个根本功能——作为对象实例的生成器和作为代码继承复用的单位——是相互冲突的。&lt;/p&gt;
+&lt;p&gt;作为对象实例的生成器要求类要大而全，其生成的对象要能独立工作。这往往导致了命名的冲突。&lt;/p&gt;
+&lt;p&gt;而作为代码继承复用的单位却要求类小而精，避免乱七八糟的冲突。这就导致了一堆不能生成对象，仅仅用来继承的模块类。真正能实用生成对象的类却没几个。&lt;/p&gt;
+&lt;p&gt;这个问题到现在都没有解决，只能留待后人的智慧了。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Written with &lt;a href="https://stackedit.io/"&gt;StackEdit&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;</summary><category term="OOP"></category><category term="杂物"></category><category term="Notes"></category></entry><entry><title>玩转Kaggle之：小曾教你一秒变神棍(1):教你掐指一算该怎么掐</title><link href="https://zwy1135.github.io/wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-1jiao-ni-qia-zhi-yi-suan-gai-zen-yao-qia.html" rel="alternate"></link><updated>2014-09-13T00:00:00+08:00</updated><author><name>Zeng Wenyuan</name></author><id>tag:zwy1135.github.io,2014-09-13:wan-zhuan-kagglezhi-xiao-ceng-jiao-ni-yi-miao-bian-shen-gun-1jiao-ni-qia-zhi-yi-suan-gai-zen-yao-qia.html</id><summary type="html">&lt;p&gt;接上回。&lt;/p&gt;
 &lt;p&gt;上回我们我们哇啦哇啦说啦一大堆，终于把思路理清楚了。现在我们就来把这个系统愉快的实现一下。然后就能在人前高深莫测的掐指一算，甩出一坨预测数据，然后一挥衣袖颇有高手范的飘然而去了。&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;主要的流程是这样的：&lt;/p&gt;

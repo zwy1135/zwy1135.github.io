@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>随笔 - 观测站</title>
+    <title>Reading Notes - 观测站</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -44,10 +44,10 @@
                         <li >
                             <a href="https://zwy1135.github.io/category/machine-learning.html">Machine learning</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="https://zwy1135.github.io/category/reading-notes.html">Reading notes</a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="https://zwy1135.github.io/category/sui-bi.html">随笔</a>
                         </li>
             </ul>
@@ -64,42 +64,30 @@
         <div class="col-sm-9">
 
             <article>
-                <h2><a href="https://zwy1135.github.io/bi-shi-you-gan.html">笔试有感</a></h2>
-                <div class="summary"><p>今天去阿里的笔试。</p>
-<p>笔试分两部分，一部分选择，一部分编程。我做完选择之后，顺手点了提交。结果告诉我两部分是一起提交的。结果八十分钟的编程时间都浪费在客服那恶心的一分钟直接断线系统上了。</p>
-<p>这让我说什么好。。。。。。。这时候只要微笑就好了吧。</p>
-<p>算了，抱怨也没什么意思。还是继续刷刷LeetCode，准备下一家吧。</p>
-<p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
-                    <a class="btn btn-default btn-xs" href="https://zwy1135.github.io/bi-shi-you-gan.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="https://zwy1135.github.io/zhuan-tou-python3liao.html">转投python3了</a></h2>
-                <div class="summary"><p>这几天关注了一下 python3 的兼容性情况，发现我平时常用的包都早就兼容 python3 了。又想起前段时间折腾的要死的 python2 编码问题，总觉的是时候拥抱新技术了。于是呢这一篇博客就成了我用 python3 版的 pelican 编译的第一篇博客了，可喜可贺，特此留念。</p>
-<p>另外这几天发现了一个叫 conda 的 python 包管理器，甚是好用啊。最主要的是它用二进制安装包的形式来管理各种 python 包，而不是像 pip 一样管理源码包。这对于像我这种主要使用 windows 的家伙简直是天大的福音啊。从此更新 numpy 和 scipy 再也不用自己去下安装包了。再也不用折腾 lapack 和 blas 这种蛋疼得问题库了。</p>
-<p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
-                    <a class="btn btn-default btn-xs" href="https://zwy1135.github.io/zhuan-tou-python3liao.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="https://zwy1135.github.io/hello-world.html">Hello World！</a></h2>
-                <div class="summary"><p>断断续续折腾了好几天，终于是吧这个博客弄起来了。</p>
-<p>用pelican配的github pages，不得不说python2在windows下的编码问题真是令人蛋碎啊。从安装开始就不停的报unicodedecodeError。差点把我搞疯了。这是逼我转投python3的节奏么。</p>
-<p>不管怎样，问题终究是解决了。解法是在每一个报错的文件里加上</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
-<span class="nb">reload</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">setdefaultencoding</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">getfilesystemencoding</span><span class="p">())</span>
+                <h2><a href="https://zwy1135.github.io/oopde-na-dian-shi.html">OOP的那点事</a></h2>
+                <div class="summary"><p>隔了几个月，终于是又开始更新了。</p>
+<p>最近在读《代码之髓》，略有心得，在此记述留赠有缘人吧。</p>
+<hr />
+<p>废话不说，入正题。这次要写的是面向对象编程的话题。当然，我不会在这里絮叨class后面要加几个括号之类的细枝末节。这里要讲的是一些编程思想上的东西。</p>
+<h3>什么是类？</h3>
+<p>说起面向对象，最重要的话题就是类了。那到底什么是类呢？圈里一直有两种不同的看法：</p>
+<div class="highlight"><pre><span class="mf">1.</span><span class="err">类就是用户自己定义的数据类型，描述了数据以及数据的使用方法。</span>
+<span class="mf">2.</span><span class="err">类是对程序中运行实体的描述，消息在实体之间传递并由实体来处理。</span>
 </pre></div>
 
 
-<p>不小心误入这里的朋友也许可以用上。</p>
-<p>最后感谢一下frantic1048提供的pelican使用<a href="http://frantic1048.com/bo-ke-dan-sheng-ji-ji-yu-githubpelicanchuang-jian-bo-ke-de-zheng-ge-guo-cheng.html">教程</a>。</p>
-<blockquote>
-<p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
-</blockquote>
-                    <a class="btn btn-default btn-xs" href="https://zwy1135.github.io/hello-world.html">more ...</a>
+<p>其实归结起来，还是那个老掉牙的统治与合作的话题。</p>
+<p>第一种观点，我把它称为统治模式。它把由这种类建立起来的对象统统当作实现任务的工具，至于这些工具怎么使用，使用的效果怎样是由使用者决定的。打个拟人化的比方，对象的工作情况就像下面这段对话：</p>
+<div class="highlight"><pre><span class="err">大哥，我会干这些这些事情，你给我排任务吧。</span>
+<span class="err">行，知道了，你说话，我照办。</span>
+<span class="err">大哥，这么干行不通啊。你拿个主意吧。</span>
+<span class="err">什么，你要我自己处理？！我不会，你就是打死我我也不会处理的。</span>
+</pre></div>
+
+
+<p>这种思想指导下带来的结果是：你可以很方便的按照任务的划分把类建立起来，但是在被各种类或者对象组合起来使用的时候可能会出现各种诡异的麻烦。</p>
+<p>具体表现就是 ...</p>
+                    <a class="btn btn-default btn-xs" href="https://zwy1135.github.io/oopde-na-dian-shi.html">more ...</a>
                 </div>
             </article>
             <hr/>
@@ -243,7 +231,7 @@
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2014 Zeng Wenyuan
+         <div class="col-xs-10">&copy; 2015 Zeng Wenyuan
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>

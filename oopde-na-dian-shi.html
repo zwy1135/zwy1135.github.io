@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>玩转Kaggle之Titanic(0):开坑宣言 - 观测站</title>
+    <title>OOP的那点事 - 观测站</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -12,9 +12,9 @@
 
     <!-- Open Graph tags -->
             <meta property="og:type" content="article"/>
-            <meta property="og:title" content="玩转Kaggle之Titanic(0):开坑宣言"/>
-            <meta property="og:url" content="https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic0kai-keng-xuan-yan.html"/>
-            <meta property="og:description" content="观众朋友们，欢迎收看最新一期的Kaggle挑战赛娱乐实况解说。由于博主也是现学现卖，在本系列内容中，你们将不可避免的看到：博主犯二，代码错漏，方法行不通，前面全部推到重来等内容。遇到这种情况，其立即保护好自己的双眼并果断右上方点×。不过，如果有真的猛士能忍下这些糟糕的内容指点我一下的话，请在下方留言，谢谢。 废话不多说，我们开始吧。 先进一段背景。 什么是Kaggle？ Kaggle是由Predictive modelling公司于2010年四月推出的众包数据分析与竞赛平台。企业可以在上面以竞赛的形式发布自己数据分析的问题，寻求解决方法，而全世界任何人都可以注册，参与其中，提出自己的想法和解决方案，平台实时给予反馈结果，可以在排行榜中看到自己的位置。(引自这里) 经过这么多年的发展，Kaggle在机器学习与数据分析领域中极具影响力，他的地位就像吉米多维奇习题集之于数学分析或者POJ之于ACM竞赛。 总之对于对机器学习和数据科学感兴趣的同学，有事没事上去刷一刷题，勾搭一下各路大牛还是能起到活泼身心治疗失眠的作用的。 什么是Scikit-Learn？ Scikit-Learn是这一系列文章中主要用到的工具。它是Python下的一个重要的机器学习库，它实现了大部分经典的机器学习算法而且提供了方便使用又风格统一的接口。近年来使用人数不断上升，大有成为行业标准的趋势。更重要的是这是博主唯一会用的机器学习库，所以只能用它来卖弄一下了。 了解完背景之后我们就可以进正题了。 点开Kaggle的competitions页面，上面还是有很多正在进行的比赛的。不过，对于我们这种刚入门的新手肯定是不能上来就挑战那些难得吓人大神专用关卡。我们还是来看看101新手村里面有什么教学关卡好玩 ..."/>
+            <meta property="og:title" content="OOP的那点事"/>
+            <meta property="og:url" content="https://zwy1135.github.io/oopde-na-dian-shi.html"/>
+            <meta property="og:description" content="隔了几个月，终于是又开始更新了。 最近在读《代码之髓》，略有心得，在此记述留赠有缘人吧。 废话不说，入正题。这次要写的是面向对象编程的话题。当然，我不会在这里絮叨class后面要加几个括号之类的细枝末节。这里要讲的是一些编程思想上的东西。 什么是类？ 说起面向对象，最重要的话题就是类了。那到底什么是类呢？圈里一直有两种不同的看法： 1.类就是用户自己定义的数据类型，描述了数据以及数据的使用方法。 2.类是对程序中运行实体的描述，消息在实体之间传递并由实体来处理。 其实归结起来，还是那个老掉牙的统治与合作的话题。 第一种观点，我把它称为统治模式。它把由这种类建立起来的对象统统当作实现任务的工具，至于这些工具怎么使用，使用的效果怎样是由使用者决定的。打个拟人化的比方，对象的工作情况就像下面这段对话： 大哥，我会干这些这些事情，你给我排任务吧。 行，知道了，你说话，我照办。 大哥，这么干行不通啊。你拿个主意吧。 什么，你要我自己处理？！我不会，你就是打死我我也不会处理的。 这种思想指导下带来的结果是：你可以很方便的按照任务的划分把类建立起来，但是在被各种类或者对象组合起来使用的时候可能会出现各种诡异的麻烦。 具体表现就是 ..."/>
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="https://zwy1135.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -41,10 +41,10 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                        <li class="active">
+                        <li >
                             <a href="https://zwy1135.github.io/category/machine-learning.html">Machine learning</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="https://zwy1135.github.io/category/reading-notes.html">Reading notes</a>
                         </li>
                         <li >
@@ -67,10 +67,10 @@
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic0kai-keng-xuan-yan.html"
+                    <a href="https://zwy1135.github.io/oopde-na-dian-shi.html"
                        rel="bookmark"
-                       title="Permalink to 玩转Kaggle之Titanic(0):开坑宣言">
-                        玩转Kaggle之Titanic(0):开坑宣言
+                       title="Permalink to OOP的那点事">
+                        OOP的那点事
                     </a>
                 </h1>
             </header>
@@ -80,46 +80,80 @@
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-08-12T00:00:00"> 周二 12 八月 2014</time>
+        <i class="fa fa-calendar"></i><time datetime="2015-01-20T00:00:00"> 周二 20 一月 2015</time>
     </span>
 
 
 
 <span class="label label-default">Tags</span>
-	<a href="https://zwy1135.github.io/tag/machine-learning.html">Machine Learning</a>
+	<a href="https://zwy1135.github.io/tag/oop.html">OOP</a>
         /
-	<a href="https://zwy1135.github.io/tag/scikit-learn.html">Scikit-Learn</a>
+	<a href="https://zwy1135.github.io/tag/za-wu.html">杂物</a>
         /
-	<a href="https://zwy1135.github.io/tag/python.html">python</a>
-        /
-	<a href="https://zwy1135.github.io/tag/kaggle.html">kaggle</a>
+	<a href="https://zwy1135.github.io/tag/notes.html">Notes</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>观众朋友们，欢迎收看最新一期的Kaggle挑战赛娱乐实况解说。由于博主也是现学现卖，在本系列内容中，你们将不可避免的看到：博主犯二，代码错漏，方法行不通，前面全部推到重来等内容。遇到这种情况，其立即保护好自己的双眼并果断右上方点×。不过，如果有真的猛士能忍下这些糟糕的内容指点我一下的话，请在下方留言，谢谢。</p>
-<p>废话不多说，我们开始吧。</p>
+                <p>隔了几个月，终于是又开始更新了。</p>
+<p>最近在读《代码之髓》，略有心得，在此记述留赠有缘人吧。</p>
 <hr />
-<p>先进一段背景。</p>
-<h3>什么是Kaggle？</h3>
-<p>Kaggle是由Predictive modelling公司于2010年四月推出的众包数据分析与竞赛平台。企业可以在上面以竞赛的形式发布自己数据分析的问题，寻求解决方法，而全世界任何人都可以注册，参与其中，提出自己的想法和解决方案，平台实时给予反馈结果，可以在排行榜中看到自己的位置。(引自<a href="http://blog.sina.com.cn/s/blog_648ca2350101ho9p.html">这里</a>)</p>
-<p>经过这么多年的发展，Kaggle在机器学习与数据分析领域中极具影响力，他的地位就像吉米多维奇习题集之于数学分析或者POJ之于ACM竞赛。</p>
-<p>总之对于对机器学习和数据科学感兴趣的同学，有事没事上去刷一刷题，勾搭一下各路大牛还是能起到活泼身心治疗失眠的作用的。</p>
-<h3>什么是Scikit-Learn？</h3>
-<p>Scikit-Learn是这一系列文章中主要用到的工具。它是Python下的一个重要的机器学习库，它实现了大部分经典的机器学习算法而且提供了方便使用又风格统一的接口。近年来使用人数不断上升，大有成为行业标准的趋势。更重要的是这是博主唯一会用的机器学习库，所以只能用它来卖弄一下了。</p>
+<p>废话不说，入正题。这次要写的是面向对象编程的话题。当然，我不会在这里絮叨class后面要加几个括号之类的细枝末节。这里要讲的是一些编程思想上的东西。</p>
+<h3>什么是类？</h3>
+<p>说起面向对象，最重要的话题就是类了。那到底什么是类呢？圈里一直有两种不同的看法：</p>
+<div class="highlight"><pre><span class="mf">1.</span><span class="err">类就是用户自己定义的数据类型，描述了数据以及数据的使用方法。</span>
+<span class="mf">2.</span><span class="err">类是对程序中运行实体的描述，消息在实体之间传递并由实体来处理。</span>
+</pre></div>
+
+
+<p>其实归结起来，还是那个老掉牙的统治与合作的话题。</p>
+<p>第一种观点，我把它称为统治模式。它把由这种类建立起来的对象统统当作实现任务的工具，至于这些工具怎么使用，使用的效果怎样是由使用者决定的。打个拟人化的比方，对象的工作情况就像下面这段对话：</p>
+<div class="highlight"><pre><span class="err">大哥，我会干这些这些事情，你给我排任务吧。</span>
+<span class="err">行，知道了，你说话，我照办。</span>
+<span class="err">大哥，这么干行不通啊。你拿个主意吧。</span>
+<span class="err">什么，你要我自己处理？！我不会，你就是打死我我也不会处理的。</span>
+</pre></div>
+
+
+<p>这种思想指导下带来的结果是：你可以很方便的按照任务的划分把类建立起来，但是在被各种类或者对象组合起来使用的时候可能会出现各种诡异的麻烦。</p>
+<p>具体表现就是：项目写到最后了，要把两个东西组合在一起用，但是这俩破玩意根本不兼容啊，赶紧改一改。什么，这俩破玩意都被几百个地方引用了，一个字母都不能改，怎么办怎么办！！！！！</p>
+<p>第二种观点，我把它称之为合作模式。它把由这种类建立起来的对象都当作可以独当一面的大牛，对象与对象之间的合作就只需要发个消息就好。它工作起来就像这样：</p>
+<div class="highlight"><pre><span class="err">这活要我来干？行我知道了。</span>
+<span class="err">啊，这里出了问题。没事，我自己处理。</span>
+<span class="err">都说了我自己处理了，你就别在旁边唧唧歪歪个不停了，干你自己的活去。</span>
+</pre></div>
+
+
+<p>这种思想导致了：把各种对象组合起来使用的时候异常舒爽，但是建立类的时候，要考虑让它天然的适配各种情况，坑的无比啊。</p>
+<p>它的表现就是：工期过半了，项目进行的怎样了？什么，你还在写设计报告？！@￥%……&amp;*（（））</p>
+<p>总而言之，这两种思想就是坑前期还是坑后期的选择，反正是要坑一边的，就看着坑吧。</p>
+<h3>类的继承</h3>
+<p>说了类，怎么也绕不过去的就是类的继承了。那到底怎么继承啊？现在主要有三种流派：</p>
+<p>1、天下一统（一般化与专门化方法）</p>
+<p>这种流派认为，作为父类的类应该定义所有一般化的方法，而子类呢就将这些方法专门化实现。</p>
+<p>打个比方，现在有一个类叫做职猿，他有两个功能，领工资，干活。由他派生出两个子类：程序猿和设计猿。程序猿将这两个功能实现为领程序猿工资，干写代码的活。设计猿将这两个功能实现为领设计猿的工资，干设计的活。你想要一个除了领工资和干活外还会在公司里兴风作浪的家伙，不好意思，那不是职猿该干的事。</p>
+<p>2、海纳百川（共有部分的提取）</p>
+<p>这种流派认为，作为父类的类应该是子类共有功能的提取，子类各自实现自己的特殊化方法。</p>
+<p>还拿职猿做例子。职猿是程序猿和设计猿的父类，程序猿和设计猿有什么共同的功能呢——领工资。那么职猿就实现领工资，由程序猿实现自己的写代码，设计猿实现自己的做设计。</p>
+<p>3、随心所欲（仅仅将类作为代码复用的单位）</p>
+<p>这种流派认为，哪来这么多乱七八糟的规矩，爷就是喜欢写类，就是喜欢继承。爷爱怎么干怎嘛干，就是任性你管得着吗！</p>
+<h3>多重继承的天坑</h3>
+<p>说了继承，就一定要说说多重继承的问题，多重继承有什么问题？还不就是那个命名冲突的问题嘛。</p>
+<p>还是职猿那个例子。想像一下，公司里程序猿和设计猿干活干得好好的，突然出现了一个家伙，又能写代码又能做设计。那要怎么处理？那还不好办，从程序猿和设计猿多重继承出一个类，程序设计猿。好了，现在你下了一道命令，程序设计猿，干活去吧。他立刻就傻眼了，到底是该写代码还是该做设计啊？</p>
+<p>那这个问题要怎么处理？还是三种方法：</p>
+<p>1、禁止多重继承</p>
+<p>既然命名冲突是多重继承导致的，那直接禁止多重继承不就好了。把公司里的程序设计猿都开掉，就没有任何问题了。那要是需要一个单位同时做程序猿和设计猿的工该怎么办？建立一个新类叫项目组。往里面放一个程序猿和一个设计猿，定义它的干活是程序猿干活并且设计猿干活，问题就解决了。这个新类还可以美其名曰托管类。</p>
+<p>2、不预先作可能冲突的命名（MixIn方法）</p>
+<p>既然干活这个方法会引起冲突。那就不预先定义这个方法好了，把各种待实现的功能定义成众多小类，由实际工作的终端类将他们组合起来，自己定义自己的干活方法好了。比如说定义一大串工作清单，领工资，写代码，做设计。再由程序猿继承写代码，再定义自己的干活为写代码。由程序设计猿继承写代码和做设计，再定义自己的干活为写代码和做设计。</p>
+<p>3、由程序员指定选择的方法</p>
+<p>你不是不知道要干什么嘛，我告诉你不就完事了……</p>
 <hr />
-<p>了解完背景之后我们就可以进正题了。</p>
-<p>点开Kaggle的competitions页面，上面还是有很多正在进行的比赛的。不过，对于我们这种刚入门的新手肯定是不能上来就挑战那些难得吓人大神专用关卡。我们还是来看看101新手村里面有什么教学关卡好玩：</p>
-<p>手写数字识别、脸部关键点提取。。。图像识别啊，单是从图像里提取特征就够写一整系列的东西了，我们这些刚入门的渣渣就不要选这么高难度的东西了。</p>
-<p>Julia入门，Scikit-Learn官方教程。。。。这种连背景都没有就啪一段数据上来的东西，还让不让人愉快的玩耍了。</p>
-<p>泰坦尼克号上哪些人会是幸存者？这个问题好玩，就决定是你了皮卡，呃不，Titanic！。</p>
-<hr />
-<p>问题选定了，我们就可以进入机器学习问题的标准流程：</p>
+<p>最后吧，其实类会引出这么多问题还是因为他的两个根本功能——作为对象实例的生成器和作为代码继承复用的单位——是相互冲突的。</p>
+<p>作为对象实例的生成器要求类要大而全，其生成的对象要能独立工作。这往往导致了命名的冲突。</p>
+<p>而作为代码继承复用的单位却要求类小而精，避免乱七八糟的冲突。这就导致了一堆不能生成对象，仅仅用来继承的模块类。真正能实用生成对象的类却没几个。</p>
+<p>这个问题到现在都没有解决，只能留待后人的智慧了。</p>
 <blockquote>
-<p><strong>考察问题 &gt; 准备数据 &gt; 提取特征 &gt; 选定模型 &gt; 确定参数 &gt; 实施并评估效果</strong></p>
-</blockquote>
-<p>可以看出，上面这六个步骤环环相扣，每一步都构成了后面步骤的基础，一步都马虎不得。</p>
-<p>在接下来的一系列文章里，我会带着大家一步步走完这整个流程。敬请期待。</p>
 <p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
+</blockquote>
             </div>
             <!-- /.entry-content -->
     <hr />
@@ -129,8 +163,8 @@
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = 'siteofz'; // required: replace example with your forum shortname
-            var disqus_identifier = 'wan-zhuan-kagglezhi-titanic0kai-keng-xuan-yan';
-            var disqus_url = 'https://zwy1135.github.io/wan-zhuan-kagglezhi-titanic0kai-keng-xuan-yan.html';
+            var disqus_identifier = 'oopde-na-dian-shi';
+            var disqus_url = 'https://zwy1135.github.io/oopde-na-dian-shi.html';
             var disqus_config = function () {
                 this.language = "zh";
             };
